@@ -61,6 +61,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 self.corner = false
             }
         }
+
+        // Create status bar
+        _ = StatusBar()
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
