@@ -10,7 +10,6 @@
 		71E9A66129344F8A006C8926 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E9A66029344F8A006C8926 /* AppDelegate.swift */; };
 		71E9A66329344F8A006C8926 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E9A66229344F8A006C8926 /* ViewController.swift */; };
 		71E9A66529344F8A006C8926 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 71E9A66429344F8A006C8926 /* Assets.xcassets */; };
-		71E9A66829344F8A006C8926 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71E9A66629344F8A006C8926 /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -18,7 +17,6 @@
 		71E9A66029344F8A006C8926 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		71E9A66229344F8A006C8926 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		71E9A66429344F8A006C8926 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		71E9A66729344F8A006C8926 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		71E9A66929344F8A006C8926 /* HotApps.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HotApps.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -55,7 +53,6 @@
 				71E9A66029344F8A006C8926 /* AppDelegate.swift */,
 				71E9A66229344F8A006C8926 /* ViewController.swift */,
 				71E9A66429344F8A006C8926 /* Assets.xcassets */,
-				71E9A66629344F8A006C8926 /* Main.storyboard */,
 				71E9A66929344F8A006C8926 /* HotApps.entitlements */,
 			);
 			path = HotApps;
@@ -120,7 +117,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				71E9A66529344F8A006C8926 /* Assets.xcassets in Resources */,
-				71E9A66829344F8A006C8926 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,17 +133,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		71E9A66629344F8A006C8926 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				71E9A66729344F8A006C8926 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		71E9A66A29344F8A006C8926 /* Debug */ = {
