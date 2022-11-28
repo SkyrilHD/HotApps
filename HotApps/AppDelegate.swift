@@ -25,6 +25,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return true
     }
 
-
+    @objc func aboutApp() {
+        _ = AboutApp()
+    }
 }
 
