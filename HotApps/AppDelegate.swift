@@ -51,7 +51,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
 
             let frontApp = NSWorkspace.shared.frontmostApplication!
-            let frontAppName = frontApp.bundleURL!.absoluteString.dropFirst(7).dropLast(1)
+            let frontAppName = frontApp.bundleURL!.absoluteString.dropFirst(7).dropLast(1).replacingOccurrences(of: "%20", with: " ")
 
             // Open application if pointer is at corner
             if (self.corner && self.appToOpen != "") {
@@ -60,7 +60,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 if frontAppName != self.appToOpen {
                     for runningApp in NSWorkspace.shared.runningApplications {
                         if runningApp.activationPolicy == .regular {
-                            if self.appToOpen == runningApp.bundleURL!.absoluteString.dropFirst(7).dropLast(1) {
+                            if self.appToOpen == runningApp.bundleURL!.absoluteString.dropFirst(7).dropLast(1).replacingOccurrences(of: "%20", with: " ") {
                                 runningApp.unhide()
                                 break
                             }
