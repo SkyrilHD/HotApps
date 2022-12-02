@@ -50,15 +50,31 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 self.corner = true
             }
 
+            let frontApp = NSWorkspace.shared.frontmostApplication!
+            let frontAppName = frontApp.bundleURL!.absoluteString.dropFirst(7).dropLast(1)
+
             // Open application if pointer is at corner
             if (self.corner && self.appToOpen != "") {
-                self.appPath = NSURL(fileURLWithPath: self.appToOpen, isDirectory: true) as URL
-                let path = "/bin"
-                let configuration = NSWorkspace.OpenConfiguration()
-                configuration.arguments = [path]
-                NSWorkspace.shared.openApplication(at: self.appPath!,
-                                                   configuration: configuration,
-                                                   completionHandler: nil)
+                // Check if the corner app is the front application
+                // If yes, the app will hide. Otherwise the app will be opened.
+                if frontAppName != self.appToOpen {
+                    for runningApp in NSWorkspace.shared.runningApplications {
+                        if runningApp.activationPolicy == .regular {
+                            if self.appToOpen == runningApp.bundleURL!.absoluteString.dropFirst(7).dropLast(1) {
+                                runningApp.unhide()
+                                break
+                            }
+                        }
+                    }
+                    self.appPath = NSURL(fileURLWithPath: self.appToOpen, isDirectory: true) as URL
+                    NSWorkspace.shared.open(self.appPath!)
+                    sleep(1)
+
+                } else {
+                    frontApp.hide()
+                    sleep(1)
+                }
+
                 self.corner = false
                 self.appToOpen = ""
             }
