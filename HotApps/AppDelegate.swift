@@ -30,24 +30,48 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
             // This will check if the pointer is moved to any corner
             // bottom-left corner
-            if NSEvent.mouseLocation.x == 0 && NSEvent.mouseLocation.y < 1 {
+            if self.cornerCheck(cornerType: "bl") {
                 self.appToOpen = blApp
                 self.corner = true
             }
             // bottom-right corner
-            else if (NSEvent.mouseLocation.x).rounded() >= NSScreen.main!.frame.maxX && NSEvent.mouseLocation.y < 1 {
+            else if self.cornerCheck(cornerType: "br") {
                 self.appToOpen = brApp
                 self.corner = true
             }
             // top-left corner
-            else if NSEvent.mouseLocation.x == 0 && (NSEvent.mouseLocation.y).rounded() >= NSScreen.main!.frame.maxY {
+            else if self.cornerCheck(cornerType: "tl") {
                 self.appToOpen = tlApp
                 self.corner = true
             }
             // top-right corner
-            else if (NSEvent.mouseLocation.x).rounded() >= NSScreen.main!.frame.maxX && (NSEvent.mouseLocation.y).rounded() >= NSScreen.main!.frame.maxY {
+            else if self.cornerCheck(cornerType: "tr") {
                 self.appToOpen = trApp
                 self.corner = true
+            }
+
+            // Add 125ms delay to prevent apps from opening immediately
+            // TODO: Make this configurable
+            // TODO: Add option to disable delay when configured app is front app
+            usleep(useconds_t(125000))
+
+            // Check if pointer is still at corner
+            if !self.cornerCheck(cornerType: "bl") && self.appToOpen == blApp {
+                self.appToOpen = ""
+                self.corner = false
+                return
+            } else if !self.cornerCheck(cornerType: "br") && self.appToOpen == brApp {
+                self.appToOpen = ""
+                self.corner = false
+                return
+            } else if !self.cornerCheck(cornerType: "tl") && self.appToOpen == tlApp {
+                self.appToOpen = ""
+                self.corner = false
+                return
+            } else if !self.cornerCheck(cornerType: "tr") && self.appToOpen == trApp {
+                self.appToOpen = ""
+                self.corner = false
+                return
             }
 
             let frontApp = NSWorkspace.shared.frontmostApplication!
@@ -90,6 +114,21 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {
         return true
+    }
+
+    func cornerCheck(cornerType: String) -> Bool {
+        switch cornerType {
+        case "bl":
+            return NSEvent.mouseLocation.x == 0 && NSEvent.mouseLocation.y < 1
+        case "br":
+            return (NSEvent.mouseLocation.x).rounded() >= NSScreen.main!.frame.maxX && NSEvent.mouseLocation.y < 1
+        case "tl":
+            return NSEvent.mouseLocation.x == 0 && (NSEvent.mouseLocation.y).rounded() >= NSScreen.main!.frame.maxY
+        case "tr":
+            return (NSEvent.mouseLocation.x).rounded() >= NSScreen.main!.frame.maxX && (NSEvent.mouseLocation.y).rounded() >= NSScreen.main!.frame.maxY
+        default:
+            return false
+        }
     }
 
     @objc func aboutApp() {
