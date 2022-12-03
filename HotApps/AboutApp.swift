@@ -23,9 +23,11 @@ class AboutApp: AppDelegate {
         window?.title = "About HotApps"
 
         // Add logo to window
-        let appIcon = NSImageView(frame: NSRect(x: ((window?.frame.width)!/2-(NSImage(named: "AppIcon")?.size.width)!/2), y: ((window?.frame.height)!/2-(NSImage(named: "AppIcon")?.size.height)!/2)+30, width: (NSImage(named: "AppIcon")?.size.width)!, height: (NSImage(named: "AppIcon")?.size.height)!))
-        appIcon.image = NSImage(named: "AppIcon")
-        window!.contentView?.addSubview(appIcon)
+        if ((NSImage(named: "AppIcon")?.isValid) != nil) {
+            let appIcon = NSImageView(frame: NSRect(x: ((window?.frame.width)!/2-(NSImage(named: "AppIcon")?.size.width)!/2), y: ((window?.frame.height)!/2-(NSImage(named: "AppIcon")?.size.height)!/2)+30, width: (NSImage(named: "AppIcon")?.size.width)!, height: (NSImage(named: "AppIcon")?.size.height)!))
+            appIcon.image = NSImage(named: "AppIcon")
+            window!.contentView?.addSubview(appIcon)
+        }
 
         // Add text to window
         let aboutText = NSTextField(string: "Version: \(Bundle.main.infoDictionary!["CFBundleShortVersionString"]!)\n\nCopyright © 2022 SkyrilHD\nAll rights reserved")
