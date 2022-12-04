@@ -26,6 +26,8 @@ class Settings: NSWindowController, NSWindowDelegate {
     var brLabel = NSTextField(string: brApp)
     let brSelect = NSButton(title: "Select", target: nil, action: nil)
 
+    var largestPath: CGFloat = 0
+
     override init(window: NSWindow?) {
         super.init(window: window)
         self.window = window
@@ -45,11 +47,11 @@ class Settings: NSWindowController, NSWindowDelegate {
 
         self.window?.delegate = self
 
-        updateAll()
+        appSettings()
 
         self.window!.setContentSize(NSSize(width: tlSelect.frame.maxX+20, height: self.window!.frame.height-brSelect.frame.minY))
 
-        updateAll()
+        appSettings()
         self.window?.center()
     }
 
@@ -65,7 +67,7 @@ class Settings: NSWindowController, NSWindowDelegate {
         tlLabel.isSelectable = true
         tlLabel.alignment = NSTextAlignment.center
         tlLabel.font = NSFont.userFont(ofSize: 12)
-        tlLabel.frame = CGRect(x: tlButton.frame.maxX+50, y: tlButton.frame.maxY-(tlLabel.frame.height), width: getLargestPath(), height: tlLabel.frame.height)
+        tlLabel.frame = CGRect(x: tlButton.frame.maxX+50, y: tlButton.frame.maxY-(tlLabel.frame.height), width: largestPath, height: tlLabel.frame.height)
         self.window?.contentView?.addSubview(tlLabel)
 
         // 'Top-left corner' Select button
@@ -89,7 +91,8 @@ class Settings: NSWindowController, NSWindowDelegate {
         trLabel.isSelectable = false
         trLabel.alignment = NSTextAlignment.center
         trLabel.font = NSFont.userFont(ofSize: 12)
-        trLabel.frame = CGRect(x: trButton.frame.maxX+50, y: trButton.frame.maxY-(trLabel.frame.height), width: getLargestPath(), height: trLabel.frame.height)
+        trLabel.frame = CGRect(x: trButton.frame.maxX+50, y: trButton.frame.maxY-(trLabel.frame.height), width: largestPath, height: trLabel.frame.height)
+        trLabel.sizeThatFits(NSSize(width: self.window!.frame.width-trSelect.frame.width-70-trLabel.frame.minX, height: 0))
         self.window?.contentView?.addSubview(trLabel)
 
         // 'Top-right corner' Select button
@@ -113,7 +116,7 @@ class Settings: NSWindowController, NSWindowDelegate {
         blLabel.isSelectable = false
         blLabel.alignment = NSTextAlignment.center
         blLabel.font = NSFont.userFont(ofSize: 12)
-        blLabel.frame = CGRect(x: blButton.frame.maxX+50, y: blButton.frame.maxY-(blLabel.frame.height), width: getLargestPath(), height: blLabel.frame.height)
+        blLabel.frame = CGRect(x: blButton.frame.maxX+50, y: blButton.frame.maxY-(blLabel.frame.height), width: largestPath, height: blLabel.frame.height)
         self.window?.contentView?.addSubview(blLabel)
 
         // 'Bottom-left corner' Select button
@@ -137,7 +140,7 @@ class Settings: NSWindowController, NSWindowDelegate {
         brLabel.isSelectable = false
         brLabel.alignment = NSTextAlignment.center
         brLabel.font = NSFont.userFont(ofSize: 12)
-        brLabel.frame = CGRect(x: brButton.frame.maxX+50, y: brButton.frame.maxY-(brLabel.frame.height), width: getLargestPath(), height: brLabel.frame.height)
+        brLabel.frame = CGRect(x: brButton.frame.maxX+50, y: brButton.frame.maxY-(brLabel.frame.height), width: largestPath, height: brLabel.frame.height)
         self.window?.contentView?.addSubview(brLabel)
 
         // 'Bottom-right corner' Select button
@@ -150,26 +153,30 @@ class Settings: NSWindowController, NSWindowDelegate {
     }
 
     func cleanName(input: String) -> String {
-        let arr = input.components(separatedBy: "/")
-        return arr.last!
+        return input.components(separatedBy: "/").last!
     }
 
     func getLargestPath() -> CGFloat {
         var largestValue: CGFloat
-        largestValue = tlLabel.frame.width
-        if (largestValue < trLabel.frame.width) {
-            largestValue = trLabel.frame.width
+        largestValue = getStringSize(content: tlLabel.stringValue)
+        if (largestValue < getStringSize(content: trLabel.stringValue)) {
+            largestValue = getStringSize(content: trLabel.stringValue)
         }
-        if (largestValue < blLabel.frame.width) {
-            largestValue = blLabel.frame.width
+        if (largestValue < getStringSize(content: blLabel.stringValue)) {
+            largestValue = getStringSize(content: blLabel.stringValue)
         }
-        if (largestValue < brLabel.frame.width) {
-            largestValue = brLabel.frame.width
+        if (largestValue < getStringSize(content: brLabel.stringValue)) {
+            largestValue = getStringSize(content: brLabel.stringValue)
         }
-        return largestValue
+        return largestValue+20
     }
 
-    func updateAll() {
+    func getStringSize(content: String) -> CGFloat {
+        return content.size().width
+    }
+
+    func appSettings() {
+        largestPath = getLargestPath()
         topLeftSettings()
         topRightSettings()
         bottomLeftSettings()
@@ -187,32 +194,24 @@ class Settings: NSWindowController, NSWindowDelegate {
             case 1:
                 tlApp = selPath
                 tlLabel.stringValue = selPath
-                let size = tlLabel.sizeThatFits(NSSize(width: self.window!.frame.width-tlSelect.frame.width-70-tlLabel.frame.minX, height: 0))
-                let width = size.width
-                tlLabel.frame = CGRect(x: tlButton.frame.maxX+50, y: tlButton.frame.maxY-(tlLabel.frame.height), width: width, height: tlLabel.frame.height)
+                UserDefaults.standard.set(tlApp, forKey: "tlApp")
             case 2:
                 trApp = selPath
                 trLabel.stringValue = selPath
-                let size = trLabel.sizeThatFits(NSSize(width: self.window!.frame.width-trSelect.frame.width-70-trLabel.frame.minX, height: 0))
-                let width = size.width
-                trLabel.frame = CGRect(x: trButton.frame.maxX+50, y: trButton.frame.maxY-(trLabel.frame.height), width: width, height: trLabel.frame.height)
+                UserDefaults.standard.set(trApp, forKey: "trApp")
             case 3:
                 blApp = selPath
                 blLabel.stringValue = selPath
-                let size = blLabel.sizeThatFits(NSSize(width: self.window!.frame.width-blSelect.frame.width-70-blLabel.frame.minX, height: 0))
-                let width = size.width
-                blLabel.frame = CGRect(x: blButton.frame.maxX+50, y: blButton.frame.maxY-(blLabel.frame.height), width: width, height: blLabel.frame.height)
+                UserDefaults.standard.set(blApp, forKey: "blApp")
             case 4:
                 brApp = selPath
                 brLabel.stringValue = selPath
-                let size = brLabel.sizeThatFits(NSSize(width: self.window!.frame.width-brSelect.frame.width-70-brLabel.frame.minX, height: 0))
-                let width = size.width
-                brLabel.frame = CGRect(x: brButton.frame.maxX+50, y: brButton.frame.maxY-(brLabel.frame.height), width: width, height: brLabel.frame.height)
+                UserDefaults.standard.set(brApp, forKey: "brApp")
             default:
                 break
             }
-            updateAll()
-            self.window?.viewsNeedDisplay = true
+            appSettings()
+            self.window!.setContentSize(NSSize(width: tlSelect.frame.maxX+20, height: self.window!.frame.height-brSelect.frame.minY))
             StatusBar().update()
         }
     }

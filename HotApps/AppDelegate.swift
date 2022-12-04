@@ -7,16 +7,20 @@
 
 import Cocoa
 
-// TODO: Save to UserDefaults
-// Example apps
-var blApp = "/Applications/CotEditor.app"
-var brApp = "/Applications/Meta.app"
-var tlApp = "/Applications/Spek.app"
-var trApp = "/Applications/Hex Fiend.app"
+// currently set apps
+var blApp: String = ""
+var brApp: String = ""
+var tlApp: String = ""
+var trApp: String = ""
 
 class AppDelegate: NSObject, NSApplicationDelegate {
-    let settings = Settings()
+    var settings: Settings
 
+    override init() {
+        settings = Settings()
+        super.init()
+        self.firstStartupCheck()
+    }
     var appToOpen: String = ""
     var corner: Bool = false
     var appPath: URL?
@@ -142,11 +146,24 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
+    func firstStartupCheck() {
+        let savedBlApp = UserDefaults.standard.object(forKey: "blApp") as? String?
+        let savedBrApp = UserDefaults.standard.object(forKey: "brApp") as? String?
+        let savedTlApp = UserDefaults.standard.object(forKey: "tlApp") as? String?
+        let savedTrApp = UserDefaults.standard.object(forKey: "trApp") as? String?
+
+        blApp = savedBlApp! != nil ? savedBlApp!! : ""
+        brApp = savedBrApp! != nil ? savedBrApp!! : ""
+        tlApp = savedTlApp! != nil ? savedTlApp!! : ""
+        trApp = savedTrApp! != nil ? savedTrApp!! : ""
+    }
+
     @objc func aboutApp() {
         _ = AboutApp()
     }
 
     @objc func openSettings() {
+        settings = Settings()
         settings.window?.delegate = settings
         settings.showWindow(self)
     }
