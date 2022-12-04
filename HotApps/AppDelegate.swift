@@ -9,14 +9,14 @@ import Cocoa
 
 // TODO: Save to UserDefaults
 // Example apps
-let blApp = "/Applications/CotEditor.app"
-let brApp = "/Applications/Meta.app"
-let tlApp = "/Applications/Spek.app"
-let trApp = "/Applications/Hex Fiend.app"
+var blApp = "/Applications/CotEditor.app"
+var brApp = "/Applications/Meta.app"
+var tlApp = "/Applications/Spek.app"
+var trApp = "/Applications/Hex Fiend.app"
 
 class AppDelegate: NSObject, NSApplicationDelegate {
+    let settings = Settings()
 
-    
     var appToOpen: String = ""
     var corner: Bool = false
     var appPath: URL?
@@ -133,6 +133,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     @objc func aboutApp() {
         _ = AboutApp()
+    }
+
+    @objc func openSettings() {
+        settings.window?.delegate = settings
+        settings.showWindow(self)
     }
 }
 

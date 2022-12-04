@@ -38,9 +38,7 @@ class StatusBar: AppDelegate {
         nsmenu.addItem(NSMenuItem.separator())
 
         // 'Settings'
-        let settingsItem = NSMenuItem()
-        settingsItem.title = "Settings"
-        nsmenu.addItem(settingsItem)
+        nsmenu.addItem(withTitle: "Settings", action: #selector(AppDelegate().openSettings), keyEquivalent: "")
 
         nsmenu.addItem(NSMenuItem.separator())
 

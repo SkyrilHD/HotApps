@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		718D9E80293AB6270029CCA5 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718D9E7F293AB6270029CCA5 /* Settings.swift */; };
 		71E9A66129344F8A006C8926 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E9A66029344F8A006C8926 /* AppDelegate.swift */; };
 		71E9A66529344F8A006C8926 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 71E9A66429344F8A006C8926 /* Assets.xcassets */; };
 		71E9A67029346CF4006C8926 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E9A66F29346CF4006C8926 /* main.swift */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		718D9E7F293AB6270029CCA5 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		71E9A65D29344F8A006C8926 /* HotApps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HotApps.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		71E9A66029344F8A006C8926 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		71E9A66429344F8A006C8926 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -56,6 +58,7 @@
 			children = (
 				71E9A66029344F8A006C8926 /* AppDelegate.swift */,
 				71E9A67329351AA6006C8926 /* AboutApp.swift */,
+				718D9E7F293AB6270029CCA5 /* Settings.swift */,
 				71E9A6712935199D006C8926 /* StatusBar.swift */,
 				71E9A66F29346CF4006C8926 /* main.swift */,
 				71E9A66429344F8A006C8926 /* Assets.xcassets */,
@@ -133,6 +136,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				718D9E80293AB6270029CCA5 /* Settings.swift in Sources */,
 				71E9A6722935199D006C8926 /* StatusBar.swift in Sources */,
 				71E9A67429351AA6006C8926 /* AboutApp.swift in Sources */,
 				71E9A67029346CF4006C8926 /* main.swift in Sources */,
