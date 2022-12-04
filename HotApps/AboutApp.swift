@@ -37,7 +37,7 @@ class AboutApp: AppDelegate {
         aboutText.drawsBackground = false
         aboutText.alignment = NSTextAlignment.center
         aboutText.font = NSFont.userFont(ofSize: 12)
-        aboutText.frame = CGRect(x: ((window?.frame.width)!/2-175/2), y: ((window?.frame.height)!/2-130), width: 175, height: 80)
+        aboutText.frame = NSRect(x: ((window?.frame.width)!/2-(aboutText.fittingSize.width)/2), y: ((window?.frame.height)!/3-(aboutText.fittingSize.height)), width: aboutText.fittingSize.width, height: aboutText.fittingSize.height)
         window?.contentView?.addSubview(aboutText)
 
         // Show 'About HotApps' window
