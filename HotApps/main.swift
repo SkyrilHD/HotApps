@@ -13,4 +13,4 @@ app.delegate = delegate
 app.hide(nil)
 app.setActivationPolicy(.prohibited)
 
-_ = NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
+NSApplication.shared.run()
