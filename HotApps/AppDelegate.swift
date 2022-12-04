@@ -74,24 +74,31 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 return
             }
 
-            let frontApp = NSWorkspace.shared.frontmostApplication!
-            let frontAppName = frontApp.bundleURL!.absoluteString.dropFirst(7).dropLast(1).replacingOccurrences(of: "%20", with: " ")
+            let workspace = NSWorkspace.shared
+            let frontApp = workspace.frontmostApplication!
+            let frontAppName = self.cleanBundleURLString(bundleURLString: frontApp.bundleURL!.absoluteString)
 
             // Open application if pointer is at corner
             if (self.corner && self.appToOpen != "") {
                 // Check if the corner app is the front application
                 // If yes, the app will hide. Otherwise the app will be opened.
                 if frontAppName != self.appToOpen {
-                    for runningApp in NSWorkspace.shared.runningApplications {
+                    for runningApp in workspace.runningApplications {
                         if runningApp.activationPolicy == .regular {
-                            if self.appToOpen == runningApp.bundleURL!.absoluteString.dropFirst(7).dropLast(1).replacingOccurrences(of: "%20", with: " ") {
+                            if self.appToOpen == self.cleanBundleURLString(bundleURLString: runningApp.bundleURL!.absoluteString) {
                                 runningApp.unhide()
                                 break
                             }
                         }
                     }
                     self.appPath = NSURL(fileURLWithPath: self.appToOpen, isDirectory: true) as URL
-                    NSWorkspace.shared.open(self.appPath!)
+                    workspace.open(self.appPath!)
+                    if #available(macOS 10.15, *) {
+                        workspace.openApplication(at: self.appPath!, configuration: NSWorkspace.OpenConfiguration())
+                    } else {
+                        // Fallback on earlier versions
+                        workspace.open(self.appPath!)
+                    }
                     sleep(1)
 
                 } else {
@@ -114,6 +121,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {
         return true
+    }
+
+    func cleanBundleURLString(bundleURLString: String) -> String {
+        return bundleURLString.dropFirst(7).dropLast(1).replacingOccurrences(of: "%20", with: " ")
     }
 
     func cornerCheck(cornerType: String) -> Bool {
