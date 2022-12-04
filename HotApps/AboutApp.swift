@@ -23,9 +23,9 @@ class AboutApp: AppDelegate {
         window?.title = "About HotApps"
 
         // Add logo to window
-        if ((NSImage(named: "AppIcon")?.isValid) != nil) {
-            let appIcon = NSImageView(frame: NSRect(x: ((window?.frame.width)!/2-(NSImage(named: "AppIcon")?.size.width)!/2), y: ((window?.frame.height)!/2-(NSImage(named: "AppIcon")?.size.height)!/2)+30, width: (NSImage(named: "AppIcon")?.size.width)!, height: (NSImage(named: "AppIcon")?.size.height)!))
-            appIcon.image = NSImage(named: "AppIcon")
+        if let appIconImage = NSImage(named: "AppIcon"), appIconImage.isValid {
+            let appIcon = NSImageView(frame: NSRect(x: ((window?.frame.width)!/2-(appIconImage.size.width)/2), y: ((window?.frame.height)!/2-(appIconImage.size.height)/2)+30, width: (appIconImage.size.width), height: (appIconImage.size.height)))
+            appIcon.image = appIconImage
             window!.contentView?.addSubview(appIcon)
         }
 
