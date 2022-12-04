@@ -19,21 +19,13 @@ class StatusBar: AppDelegate {
         let nsmenu = NSMenu()
 
         // 'About HotApps'
-        let aboutItem = NSMenuItem()
-        aboutItem.title = "About HotApps"
-        aboutItem.action = #selector(AppDelegate().aboutApp)
-        nsmenu.addItem(aboutItem)
+        nsmenu.addItem(withTitle: "About HotApps", action: #selector(AppDelegate().aboutApp), keyEquivalent: "")
 
         nsmenu.addItem(NSMenuItem.separator())
 
         // Show which apps are being used
-        let currentLabelItem = NSMenuItem()
-        currentLabelItem.title = "Current App:"
-        nsmenu.addItem(currentLabelItem)
-
-        let currentBLItem = NSMenuItem()
-        currentBLItem.title = blApp
-        nsmenu.addItem(currentBLItem)
+        nsmenu.addItem(withTitle: "Current App:", action: nil, keyEquivalent: "")
+        nsmenu.addItem(withTitle: tlApp, action: nil, keyEquivalent: "")
 
         nsmenu.addItem(NSMenuItem.separator())
 
@@ -43,12 +35,13 @@ class StatusBar: AppDelegate {
         nsmenu.addItem(NSMenuItem.separator())
 
         // 'Quit'
-        let quitItem = NSMenuItem()
-        quitItem.title = "Quit"
-        quitItem.action = #selector(NSApplication.terminate(_:))
-        nsmenu.addItem(quitItem)
+        nsmenu.addItem(withTitle: "Quit", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "")
 
         // Apply NSMenu to status bar
         statusItem.menu = nsmenu
+    }
+
+    func update() {
+        statusItem.view?.updateLayer()
     }
 }
