@@ -8,8 +8,6 @@
 import Cocoa
 
 class Settings: NSWindowController, NSWindowDelegate {
-    // TODO: Implement action for checkbox buttons
-    
     let tlButton = NSButton(checkboxWithTitle: "Enable top-left corner", target: nil, action: nil)
     var tlLabel = NSTextField(string: tlApp)
     let tlSelect = NSButton(title: "Select", target: nil, action: nil)
@@ -58,7 +56,9 @@ class Settings: NSWindowController, NSWindowDelegate {
     func topLeftSettings() {
         // 'Top-left corner' toggle
         tlButton.frame = CGRect(x: 20, y: (self.window?.frame.height ?? 80)-80, width: brButton.frame.width, height: tlButton.frame.height)
-        tlButton.state = .on
+        tlButton.tag = 1
+        tlButton.state = tlEnabled ? .on : .off
+        tlButton.action = #selector(self.cornerSwitch(_:))
         self.window?.contentView?.addSubview(tlButton)
 
         // 'Top-left corner' application path label
@@ -82,7 +82,9 @@ class Settings: NSWindowController, NSWindowDelegate {
     func topRightSettings() {
         // 'Top-right corner' toggle
         trButton.frame = CGRect(x: 20, y: (self.window?.frame.height ?? 110)-110, width: brButton.frame.width, height: trButton.frame.height)
-        trButton.state = .on
+        trButton.tag = 2
+        trButton.state = trEnabled ? .on : .off
+        trButton.action = #selector(self.cornerSwitch(_:))
         self.window?.contentView?.addSubview(trButton)
 
         // 'Top-right corner' application path label
@@ -107,7 +109,9 @@ class Settings: NSWindowController, NSWindowDelegate {
     func bottomLeftSettings() {
         // 'Bottom-left corner' toggle
         blButton.frame = CGRect(x: 20, y: (self.window?.frame.height ?? 140)-140, width: brButton.frame.width, height: blButton.frame.height)
-        blButton.state = .on
+        blButton.tag = 3
+        blButton.state = blEnabled ? .on : .off
+        blButton.action = #selector(self.cornerSwitch(_:))
         self.window?.contentView?.addSubview(blButton)
 
         // 'Botton-left corner' application path label
@@ -131,7 +135,9 @@ class Settings: NSWindowController, NSWindowDelegate {
     func bottomRightSettings() {
         // 'Bottom-right corner' toggle
         brButton.frame = CGRect(x: 20, y: (self.window?.frame.height ?? 170)-170, width: brButton.frame.width, height: brButton.frame.height)
-        brButton.state = .on
+        brButton.tag = 4
+        brButton.state = brEnabled ? .on : .off
+        brButton.action = #selector(self.cornerSwitch(_:))
         self.window?.contentView?.addSubview(brButton)
 
         // 'Bottom-right corner' application path label
@@ -214,5 +220,25 @@ class Settings: NSWindowController, NSWindowDelegate {
             self.window!.setContentSize(NSSize(width: tlSelect.frame.maxX+20, height: self.window!.frame.height-brSelect.frame.minY))
             StatusBar().update()
         }
+    }
+
+    @objc func cornerSwitch(_ button: NSButton) {
+        switch button.tag {
+        case 1:
+            tlEnabled = tlButton.state == .on
+            UserDefaults.standard.set(tlEnabled, forKey: "tlEnabled")
+        case 2:
+            trEnabled = trButton.state == .on
+            UserDefaults.standard.set(trEnabled, forKey: "trEnabled")
+        case 3:
+            blEnabled = blButton.state == .on
+            UserDefaults.standard.set(blEnabled, forKey: "blEnabled")
+        case 4:
+            brEnabled = brButton.state == .on
+            UserDefaults.standard.set(brEnabled, forKey: "brEnabled")
+        default:
+            break
+        }
+        StatusBar().update()
     }
 }

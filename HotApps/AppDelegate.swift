@@ -12,6 +12,10 @@ var blApp: String = ""
 var brApp: String = ""
 var tlApp: String = ""
 var trApp: String = ""
+var blEnabled: Bool = false
+var brEnabled: Bool = false
+var tlEnabled: Bool = false
+var trEnabled: Bool = false
 
 class AppDelegate: NSObject, NSApplicationDelegate {
     var settings: Settings
@@ -34,22 +38,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
             // This will check if the pointer is moved to any corner
             // bottom-left corner
-            if self.cornerCheck(cornerType: "bl") {
+            if self.cornerCheck(cornerType: "bl") && blEnabled {
                 self.appToOpen = blApp
                 self.corner = true
             }
             // bottom-right corner
-            else if self.cornerCheck(cornerType: "br") {
+            else if self.cornerCheck(cornerType: "br") && brEnabled {
                 self.appToOpen = brApp
                 self.corner = true
             }
             // top-left corner
-            else if self.cornerCheck(cornerType: "tl") {
+            else if self.cornerCheck(cornerType: "tl") && tlEnabled {
                 self.appToOpen = tlApp
                 self.corner = true
             }
             // top-right corner
-            else if self.cornerCheck(cornerType: "tr") {
+            else if self.cornerCheck(cornerType: "tr") && trEnabled {
                 self.appToOpen = trApp
                 self.corner = true
             }
@@ -156,6 +160,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         brApp = savedBrApp! != nil ? savedBrApp!! : ""
         tlApp = savedTlApp! != nil ? savedTlApp!! : ""
         trApp = savedTrApp! != nil ? savedTrApp!! : ""
+
+        // check if corner detection should be enabled
+        let savedBlSetting = UserDefaults.standard.object(forKey: "blEnabled") as? Bool
+        let savedBrSetting = UserDefaults.standard.object(forKey: "brEnabled") as? Bool
+        let savedTlSetting = UserDefaults.standard.object(forKey: "tlEnabled") as? Bool
+        let savedTrSetting = UserDefaults.standard.object(forKey: "trEnabled") as? Bool
+
+        blEnabled = savedBlSetting != nil ? savedBlSetting! : false
+        brEnabled = savedBrSetting != nil ? savedBrSetting! : false
+        tlEnabled = savedTlSetting != nil ? savedTlSetting! : false
+        trEnabled = savedTrSetting != nil ? savedTrSetting! : false
     }
 
     @objc func aboutApp() {
