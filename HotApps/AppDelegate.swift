@@ -72,7 +72,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             // Add 125ms delay (by default) to prevent apps from opening immediately
             if !delayHide && (frontAppName == self.appToOpen) {
             } else {
-                usleep(UInt32(msDelay) * 1000)
+                if self.corner == true && self.appToOpen != "" {
+                    usleep(UInt32(msDelay) * 1000)
+                }
             }
 
             // Check if pointer is still at corner
