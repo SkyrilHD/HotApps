@@ -7,7 +7,7 @@
 
 import Cocoa
 
-class Settings: NSWindowController, NSWindowDelegate {
+class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
     let tlButton = NSButton(checkboxWithTitle: "Enable top-left corner", target: nil, action: nil)
     var tlLabel = NSTextField(string: tlApp)
     let tlSelect = NSButton(title: "Select", target: nil, action: nil)
@@ -23,6 +23,11 @@ class Settings: NSWindowController, NSWindowDelegate {
     let brButton = NSButton(checkboxWithTitle: "Enable bottom-right corner", target: nil, action: nil)
     var brLabel = NSTextField(string: brApp)
     let brSelect = NSButton(title: "Select", target: nil, action: nil)
+
+    var msDelayLabel = NSTextField(string: "Detection delay (in ms):")
+    var msDelayText = NSTextField(string: String(msDelay))
+
+    var delayHideSetting = NSButton(checkboxWithTitle: "Apply delay when hiding apps", target: nil, action: nil)
 
     var largestPath: CGFloat = 0
 
@@ -40,14 +45,16 @@ class Settings: NSWindowController, NSWindowDelegate {
         super.windowDidLoad()
         self.window = NSWindow(contentRect: NSMakeRect(100, 100, NSScreen.main!.frame.width/2, NSScreen.main!.frame.height/2), styleMask: [.closable, .titled], backing: NSWindow.BackingStoreType.buffered, defer: false)
 
-        self.window?.level = NSWindow.Level.normal
+        self.window?.level = NSWindow.Level.floating
         self.window?.title = "HotApps Settings"
 
         self.window?.delegate = self
 
         appSettings()
 
-        self.window!.setContentSize(NSSize(width: tlSelect.frame.maxX+20, height: self.window!.frame.height-brSelect.frame.minY))
+        self.window!.setContentSize(NSSize(width: tlSelect.frame.maxX+20, height: self.window!.frame.height-brSelect.frame.minY+60))
+
+        delaySettings()
 
         appSettings()
         self.window?.center()
@@ -189,6 +196,41 @@ class Settings: NSWindowController, NSWindowDelegate {
         bottomRightSettings()
     }
 
+    func delaySettings() {
+        msDelayLabel.frame = CGRect(x: 20, y: (self.window?.frame.height ?? 220)-220, width: msDelayLabel.frame.width, height: msDelayLabel.frame.height)
+        msDelayLabel.isEditable = false
+        msDelayLabel.isSelectable = false
+        msDelayLabel.isBordered = false
+        msDelayLabel.isBezeled = false
+        msDelayLabel.drawsBackground = false
+        self.window?.contentView?.addSubview(msDelayLabel)
+        
+        msDelayText.frame = CGRect(x: 20, y: (self.window?.frame.height ?? 240)-240, width: 40, height: msDelayText.frame.height)
+        msDelayText.stringValue = String(msDelay)
+        msDelayText.isEditable = true
+        msDelayText.delegate = self
+        self.window?.contentView?.addSubview(msDelayText)
+
+        delayHideSetting.frame = CGRect(x: ((self.window?.frame.width)!)-delayHideSetting.frame.width-20, y: (self.window?.frame.height ?? 220)-220, width: delayHideSetting.frame.width, height: delayHideSetting.frame.height)
+        delayHideSetting.state = delayHide ? .on : .off
+        delayHideSetting.action = #selector(self.delayHideSwitch(_:))
+        self.window?.contentView?.addSubview(delayHideSetting)
+    }
+
+    func controlTextDidChange(_ obj: Notification) {
+        if msDelayText.stringValue.count > 4 {
+            msDelayText.stringValue = String(msDelay)
+        }
+        if CharacterSet(charactersIn: msDelayText.stringValue).isSubset(of: .decimalDigits) {
+            if !msDelayText.stringValue.isEmpty {
+                msDelay = Int(msDelayText.stringValue)!
+                UserDefaults.standard.set(msDelay, forKey: "msDelay")
+            }
+        } else {
+            msDelayText.stringValue = String(msDelayText.stringValue.dropLast(1))
+        }
+    }
+
     @objc func openDocument(_ button: NSButton) {
         let openPanel = NSOpenPanel()
         openPanel.allowedFileTypes = ["app"]
@@ -217,7 +259,8 @@ class Settings: NSWindowController, NSWindowDelegate {
                 break
             }
             appSettings()
-            self.window!.setContentSize(NSSize(width: tlSelect.frame.maxX+20, height: self.window!.frame.height-brSelect.frame.minY))
+            self.window!.setContentSize(NSSize(width: tlSelect.frame.maxX+20, height: self.window!.frame.height-brSelect.frame.minY+60))
+            delaySettings()
             StatusBar().update()
         }
     }
@@ -240,5 +283,10 @@ class Settings: NSWindowController, NSWindowDelegate {
             break
         }
         StatusBar().update()
+    }
+
+    @objc func delayHideSwitch(_ button: NSButton) {
+        delayHide = button.state == .on
+        UserDefaults.standard.set(delayHide, forKey: "delayHide")
     }
 }

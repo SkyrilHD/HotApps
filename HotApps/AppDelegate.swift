@@ -16,6 +16,8 @@ var blEnabled: Bool = false
 var brEnabled: Bool = false
 var tlEnabled: Bool = false
 var trEnabled: Bool = false
+var msDelay: Int = 125
+var delayHide: Bool = true
 
 class AppDelegate: NSObject, NSApplicationDelegate {
     var settings: Settings
@@ -58,10 +60,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 self.corner = true
             }
 
-            // Add 125ms delay to prevent apps from opening immediately
-            // TODO: Make this configurable
-            // TODO: Add option to disable delay when configured app is front app
-            usleep(useconds_t(125000))
+            let workspace = NSWorkspace.shared
+            let frontApp = workspace.frontmostApplication!
+            let frontAppName = self.cleanBundleURLString(bundleURLString: frontApp.bundleURL!.absoluteString)
+
+            // Add 125ms delay (by default) to prevent apps from opening immediately
+            if !delayHide && (frontAppName == self.appToOpen) {
+            } else {
+                usleep(UInt32(msDelay) * 1000)
+            }
 
             // Check if pointer is still at corner
             if !self.cornerCheck(cornerType: "bl") && self.appToOpen == blApp {
@@ -81,10 +88,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 self.corner = false
                 return
             }
-
-            let workspace = NSWorkspace.shared
-            let frontApp = workspace.frontmostApplication!
-            let frontAppName = self.cleanBundleURLString(bundleURLString: frontApp.bundleURL!.absoluteString)
 
             // Open application if pointer is at corner
             if (self.corner && self.appToOpen != "") {
@@ -171,6 +174,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         brEnabled = savedBrSetting != nil ? savedBrSetting! : false
         tlEnabled = savedTlSetting != nil ? savedTlSetting! : false
         trEnabled = savedTrSetting != nil ? savedTrSetting! : false
+
+        let msDelaySetting = UserDefaults.standard.object(forKey: "msDelay") as? Int
+        msDelay = msDelaySetting != nil ? msDelaySetting! : 125
+
+        let delayHideSetting = UserDefaults.standard.object(forKey: "delayHide") as? Bool
+        delayHide = delayHideSetting != nil ? delayHideSetting! : true
     }
 
     @objc func aboutApp() {
