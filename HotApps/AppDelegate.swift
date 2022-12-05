@@ -38,25 +38,30 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 //print(NSEvent.mouseLocation)
             #endif
 
+            var cornerType = ""
             // This will check if the pointer is moved to any corner
             // bottom-left corner
             if self.cornerCheck(cornerType: "bl") && blEnabled {
                 self.appToOpen = blApp
+                cornerType = "bl"
                 self.corner = true
             }
             // bottom-right corner
             else if self.cornerCheck(cornerType: "br") && brEnabled {
                 self.appToOpen = brApp
+                cornerType = "br"
                 self.corner = true
             }
             // top-left corner
             else if self.cornerCheck(cornerType: "tl") && tlEnabled {
                 self.appToOpen = tlApp
+                cornerType = "br"
                 self.corner = true
             }
             // top-right corner
             else if self.cornerCheck(cornerType: "tr") && trEnabled {
                 self.appToOpen = trApp
+                cornerType = "br"
                 self.corner = true
             }
 
@@ -71,19 +76,32 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
 
             // Check if pointer is still at corner
-            if !self.cornerCheck(cornerType: "bl") && self.appToOpen == blApp {
-                self.appToOpen = ""
-                self.corner = false
-                return
-            } else if !self.cornerCheck(cornerType: "br") && self.appToOpen == brApp {
-                self.appToOpen = ""
-                self.corner = false
-                return
-            } else if !self.cornerCheck(cornerType: "tl") && self.appToOpen == tlApp {
-                self.appToOpen = ""
-                self.corner = false
-                return
-            } else if !self.cornerCheck(cornerType: "tr") && self.appToOpen == trApp {
+            switch cornerType {
+            case "bl":
+                if !self.cornerCheck(cornerType: "bl") && self.appToOpen == blApp {
+                    self.appToOpen = ""
+                    self.corner = false
+                    return
+                }
+            case "br":
+                if !self.cornerCheck(cornerType: "br") && self.appToOpen == brApp {
+                    self.appToOpen = ""
+                    self.corner = false
+                    return
+                }
+            case "tl":
+                if !self.cornerCheck(cornerType: "tl") && self.appToOpen == tlApp {
+                    self.appToOpen = ""
+                    self.corner = false
+                    return
+                }
+            case "tr":
+                if !self.cornerCheck(cornerType: "tr") && self.appToOpen == trApp {
+                    self.appToOpen = ""
+                    self.corner = false
+                    return
+                }
+            default:
                 self.appToOpen = ""
                 self.corner = false
                 return
