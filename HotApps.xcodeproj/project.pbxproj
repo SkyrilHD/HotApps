@@ -135,6 +135,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		718D9EA0293DAFED0029CCA5 /* Archive app */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
