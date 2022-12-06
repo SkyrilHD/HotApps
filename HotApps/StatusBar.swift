@@ -12,8 +12,14 @@ let statusItem = NSStatusBar.system.statusItem(withLength:NSStatusItem.squareLen
 class StatusBar: AppDelegate {
     override init() {
         // Set icon for status bar
-        statusItem.button?.image = NSImage(named: "StatusIcon")
-        statusItem.button?.image?.size = NSSize(width: 32, height: 32)
+        if #available(macOS 10.10, *) {
+            statusItem.button?.image = NSImage(named: "StatusIcon")
+            statusItem.button?.image?.size = NSSize(width: 32, height: 32)
+        } else {
+            // Fallback on earlier versions
+            statusItem.image = NSImage(named: "StatusIcon")
+            statusItem.image?.size = NSSize(width: 32, height: 32)
+        }
 
         // Create empty menu
         let nsmenu = NSMenu()

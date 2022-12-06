@@ -8,26 +8,26 @@
 import Cocoa
 
 class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
-    let tlButton = NSButton(checkboxWithTitle: "Enable top-left corner", target: nil, action: nil)
-    var tlLabel = NSTextField(string: tlApp)
-    let tlSelect = NSButton(title: "Select", target: nil, action: nil)
+    let tlButton = NSButton()
+    var tlLabel = NSTextField()
+    let tlSelect = NSButton()
 
-    let trButton = NSButton(checkboxWithTitle: "Enable top-right corner", target: nil, action: nil)
-    var trLabel = NSTextField(string: trApp)
-    let trSelect = NSButton(title: "Select", target: nil, action: nil)
+    let trButton = NSButton()
+    var trLabel = NSTextField()
+    let trSelect = NSButton()
     
-    let blButton = NSButton(checkboxWithTitle: "Enable bottom-left corner", target: nil, action: nil)
-    var blLabel = NSTextField(string: blApp)
-    let blSelect = NSButton(title: "Select", target: nil, action: nil)
+    let blButton = NSButton()
+    var blLabel = NSTextField()
+    let blSelect = NSButton()
 
-    let brButton = NSButton(checkboxWithTitle: "Enable bottom-right corner", target: nil, action: nil)
-    var brLabel = NSTextField(string: brApp)
-    let brSelect = NSButton(title: "Select", target: nil, action: nil)
+    let brButton = NSButton()
+    var brLabel = NSTextField()
+    let brSelect = NSButton()
 
-    var msDelayLabel = NSTextField(string: "Detection delay (in ms):")
-    var msDelayText = NSTextField(string: String(msDelay))
+    var msDelayLabel = NSTextField()
+    var msDelayText = NSTextField()
 
-    var delayHideSetting = NSButton(checkboxWithTitle: "Apply delay when hiding apps", target: nil, action: nil)
+    var delayHideSetting = NSButton()
 
     var largestPath: CGFloat = 0
 
@@ -62,6 +62,10 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
 
     func topLeftSettings() {
         // 'Top-left corner' toggle
+        tlButton.title = "Enable top-left corner"
+        tlButton.setButtonType(.switch)
+        tlButton.font = NSFont(name: ".AppleSystemUIFont", size: 13)
+        tlButton.sizeToFit()
         tlButton.frame = CGRect(x: 20, y: (self.window?.frame.height ?? 80)-80, width: brButton.frame.width, height: tlButton.frame.height)
         tlButton.tag = 1
         tlButton.state = tlEnabled ? .on : .off
@@ -71,17 +75,19 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
         // 'Top-left corner' application path label
         genericSettings(type: tlLabel, status: tlEnabled, input: tlApp)
         tlLabel.frame = CGRect(x: tlButton.frame.maxX+50, y: tlButton.frame.maxY-(tlLabel.frame.height), width: largestPath, height: tlLabel.frame.height)
-        self.window?.contentView?.addSubview(tlLabel)
 
         // 'Top-left corner' Select button
         genericSettings(type: tlSelect, status: tlEnabled, input: nil)
         tlSelect.frame = CGRect(x: tlLabel.frame.maxX+50, y: tlLabel.frame.midY-tlSelect.frame.height/2, width: tlSelect.frame.width, height: tlSelect.frame.height)
         tlSelect.tag = 1
-        self.window?.contentView?.addSubview(tlSelect)
     }
 
     func topRightSettings() {
         // 'Top-right corner' toggle
+        trButton.title = "Enable top-right corner"
+        trButton.setButtonType(.switch)
+        trButton.font = NSFont(name: ".AppleSystemUIFont", size: 13)
+        trButton.sizeToFit()
         trButton.frame = CGRect(x: 20, y: (self.window?.frame.height ?? 110)-110, width: brButton.frame.width, height: trButton.frame.height)
         trButton.tag = 2
         trButton.state = trEnabled ? .on : .off
@@ -91,18 +97,19 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
         // 'Top-right corner' application path label
         genericSettings(type: trLabel, status: trEnabled, input: trApp)
         trLabel.frame = CGRect(x: trButton.frame.maxX+50, y: trButton.frame.maxY-(trLabel.frame.height), width: largestPath, height: trLabel.frame.height)
-        trLabel.sizeThatFits(NSSize(width: self.window!.frame.width-trSelect.frame.width-70-trLabel.frame.minX, height: 0))
-        self.window?.contentView?.addSubview(trLabel)
 
         // 'Top-right corner' Select button
         genericSettings(type: trSelect, status: trEnabled, input: nil)
         trSelect.frame = CGRect(x: trLabel.frame.maxX+50, y: trLabel.frame.midY-trSelect.frame.height/2, width: trSelect.frame.width, height: trSelect.frame.height)
         trSelect.tag = 2
-        self.window?.contentView?.addSubview(trSelect)
     }
 
     func bottomLeftSettings() {
         // 'Bottom-left corner' toggle
+        blButton.title = "Enable bottom-left corner"
+        blButton.setButtonType(.switch)
+        blButton.font = NSFont(name: ".AppleSystemUIFont", size: 13)
+        blButton.sizeToFit()
         blButton.frame = CGRect(x: 20, y: (self.window?.frame.height ?? 140)-140, width: brButton.frame.width, height: blButton.frame.height)
         blButton.tag = 3
         blButton.state = blEnabled ? .on : .off
@@ -112,17 +119,19 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
         // 'Botton-left corner' application path label
         genericSettings(type: blLabel, status: blEnabled, input: blApp)
         blLabel.frame = CGRect(x: blButton.frame.maxX+50, y: blButton.frame.maxY-(blLabel.frame.height), width: largestPath, height: blLabel.frame.height)
-        self.window?.contentView?.addSubview(blLabel)
 
         // 'Bottom-left corner' Select button
         genericSettings(type: blSelect, status: blEnabled, input: nil)
         blSelect.frame = CGRect(x: blLabel.frame.maxX+50, y: blLabel.frame.midY-blSelect.frame.height/2, width: blSelect.frame.width, height: blSelect.frame.height)
         blSelect.tag = 3
-        self.window?.contentView?.addSubview(blSelect)
     }
 
     func bottomRightSettings() {
         // 'Bottom-right corner' toggle
+        brButton.title = "Enable bottom-right corner"
+        brButton.setButtonType(.switch)
+        brButton.font = NSFont(name: ".AppleSystemUIFont", size: 13)
+        brButton.sizeToFit()
         brButton.frame = CGRect(x: 20, y: (self.window?.frame.height ?? 170)-170, width: brButton.frame.width, height: brButton.frame.height)
         brButton.tag = 4
         brButton.state = brEnabled ? .on : .off
@@ -132,13 +141,11 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
         // 'Bottom-right corner' application path label
         genericSettings(type: brLabel, status: brEnabled, input: brApp)
         brLabel.frame = CGRect(x: brButton.frame.maxX+50, y: brButton.frame.maxY-(brLabel.frame.height), width: largestPath, height: brLabel.frame.height)
-        self.window?.contentView?.addSubview(brLabel)
 
         // 'Bottom-right corner' Select button
         genericSettings(type: brSelect, status: brEnabled, input: nil)
         brSelect.frame = CGRect(x: brLabel.frame.maxX+50, y: brLabel.frame.midY-brSelect.frame.height/2, width: brSelect.frame.width, height: brSelect.frame.height)
         brSelect.tag = 4
-        self.window?.contentView?.addSubview(brSelect)
     }
 
     func cleanName(input: String) -> String {
@@ -167,13 +174,16 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
 
     func appSettings() {
         largestPath = getLargestPath()
-        topLeftSettings()
-        topRightSettings()
-        bottomLeftSettings()
         bottomRightSettings()
+        bottomLeftSettings()
+        topRightSettings()
+        topLeftSettings()
     }
 
     func delaySettings() {
+        msDelayLabel.stringValue = "Detection delay (in ms):"
+        msDelayLabel.font = NSFont(name: ".AppleSystemUIFont", size: 13)
+        msDelayLabel.sizeToFit()
         msDelayLabel.frame = CGRect(x: 20, y: (self.window?.frame.height ?? 220)-220, width: msDelayLabel.frame.width, height: msDelayLabel.frame.height)
         msDelayLabel.isEditable = false
         msDelayLabel.isSelectable = false
@@ -181,13 +191,18 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
         msDelayLabel.isBezeled = false
         msDelayLabel.drawsBackground = false
         self.window?.contentView?.addSubview(msDelayLabel)
-        
+
+        msDelayText.sizeToFit()
         msDelayText.frame = CGRect(x: 20, y: (self.window?.frame.height ?? 240)-240, width: 40, height: msDelayText.frame.height)
         msDelayText.stringValue = String(msDelay)
         msDelayText.isEditable = true
         msDelayText.delegate = self
         self.window?.contentView?.addSubview(msDelayText)
 
+        delayHideSetting.title = "Apply delay when hiding apps"
+        delayHideSetting.setButtonType(.switch)
+        delayHideSetting.font = NSFont(name: ".AppleSystemUIFont", size: 13)
+        delayHideSetting.sizeToFit()
         delayHideSetting.frame = CGRect(x: ((self.window?.frame.width)!)-delayHideSetting.frame.width-20, y: (self.window?.frame.height ?? 220)-220, width: delayHideSetting.frame.width, height: delayHideSetting.frame.height)
         delayHideSetting.state = delayHide ? .on : .off
         delayHideSetting.action = #selector(self.delayHideSwitch(_:))
@@ -215,14 +230,21 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
             textField.isEditable = false
             textField.isSelectable = false
             textField.isEnabled = status
+            textField.sizeToFit()
             textField.alignment = NSTextAlignment.center
             textField.font = NSFont(name: ".AppleSystemUIFont", size: 13)
+            self.window?.contentView?.addSubview(textField)
         } else if type.isKind(of: NSButton.self) {
             let button: NSButton = type as! NSButton
+            button.title = "Select"
             button.setButtonType(.momentaryPushIn)
             button.target = self
             button.isEnabled = status
+            button.bezelStyle = .rounded
+            button.font = NSFont(name: ".AppleSystemUIFont", size: 13)
+            button.sizeToFit()
             button.action = #selector(self.openDocument(_:))
+            self.window?.contentView?.addSubview(button)
         }
     }
 
