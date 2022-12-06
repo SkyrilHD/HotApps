@@ -254,6 +254,7 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
             }
             appSettings()
             self.window!.setContentSize(NSSize(width: tlSelect.frame.maxX+20, height: self.window!.frame.height-brSelect.frame.minY+60))
+            self.window!.center()
             delaySettings()
             StatusBar().update()
         }
