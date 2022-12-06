@@ -30,7 +30,9 @@ class AboutApp: AppDelegate {
         }
 
         // Add text to window
-        let aboutText = NSTextField(string: "Version: \(Bundle.main.infoDictionary!["CFBundleShortVersionString"]!)\n\nCopyright © 2022 SkyrilHD\nAll rights reserved")
+        let year = Calendar.current.component(.year, from: Date())
+        let aboutText = NSTextField()
+        aboutText.stringValue = "Version: \(Bundle.main.infoDictionary!["CFBundleShortVersionString"]!)\n\nCopyright © \(year) SkyrilHD\nAll rights reserved"
         aboutText.isEditable = false
         aboutText.isSelectable = false
         aboutText.isBezeled = false
