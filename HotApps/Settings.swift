@@ -69,20 +69,12 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
         self.window?.contentView?.addSubview(tlButton)
 
         // 'Top-left corner' application path label
-        tlLabel.stringValue = self.cleanName(input: tlLabel.stringValue)
-        tlLabel.isEditable = false
-        tlLabel.isSelectable = true
-        tlLabel.isEnabled = tlEnabled
-        tlLabel.alignment = NSTextAlignment.center
-        tlLabel.font = NSFont.userFont(ofSize: 12)
+        genericSettings(type: tlLabel, status: tlEnabled, input: tlApp)
         tlLabel.frame = CGRect(x: tlButton.frame.maxX+50, y: tlButton.frame.maxY-(tlLabel.frame.height), width: largestPath, height: tlLabel.frame.height)
         self.window?.contentView?.addSubview(tlLabel)
 
         // 'Top-left corner' Select button
-        tlSelect.setButtonType(.momentaryPushIn)
-        tlSelect.target = self
-        tlSelect.isEnabled = tlEnabled
-        tlSelect.action = #selector(self.openDocument(_:))
+        genericSettings(type: tlSelect, status: tlEnabled, input: nil)
         tlSelect.frame = CGRect(x: tlLabel.frame.maxX+50, y: tlLabel.frame.midY-tlSelect.frame.height/2, width: tlSelect.frame.width, height: tlSelect.frame.height)
         tlSelect.tag = 1
         self.window?.contentView?.addSubview(tlSelect)
@@ -97,21 +89,13 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
         self.window?.contentView?.addSubview(trButton)
 
         // 'Top-right corner' application path label
-        trLabel.stringValue = self.cleanName(input: trLabel.stringValue)
-        trLabel.isEditable = false
-        trLabel.isSelectable = false
-        trLabel.isEnabled = trEnabled
-        trLabel.alignment = NSTextAlignment.center
-        trLabel.font = NSFont.userFont(ofSize: 12)
+        genericSettings(type: trLabel, status: trEnabled, input: trApp)
         trLabel.frame = CGRect(x: trButton.frame.maxX+50, y: trButton.frame.maxY-(trLabel.frame.height), width: largestPath, height: trLabel.frame.height)
         trLabel.sizeThatFits(NSSize(width: self.window!.frame.width-trSelect.frame.width-70-trLabel.frame.minX, height: 0))
         self.window?.contentView?.addSubview(trLabel)
 
         // 'Top-right corner' Select button
-        trSelect.setButtonType(.momentaryPushIn)
-        trSelect.target = self
-        trSelect.isEnabled = trEnabled
-        trSelect.action = #selector(self.openDocument(_:))
+        genericSettings(type: trSelect, status: trEnabled, input: nil)
         trSelect.frame = CGRect(x: trLabel.frame.maxX+50, y: trLabel.frame.midY-trSelect.frame.height/2, width: trSelect.frame.width, height: trSelect.frame.height)
         trSelect.tag = 2
         self.window?.contentView?.addSubview(trSelect)
@@ -126,20 +110,12 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
         self.window?.contentView?.addSubview(blButton)
 
         // 'Botton-left corner' application path label
-        blLabel.stringValue = self.cleanName(input: blLabel.stringValue)
-        blLabel.isEditable = false
-        blLabel.isSelectable = false
-        blLabel.isEnabled = blEnabled
-        blLabel.alignment = NSTextAlignment.center
-        blLabel.font = NSFont.userFont(ofSize: 12)
+        genericSettings(type: blLabel, status: blEnabled, input: blApp)
         blLabel.frame = CGRect(x: blButton.frame.maxX+50, y: blButton.frame.maxY-(blLabel.frame.height), width: largestPath, height: blLabel.frame.height)
         self.window?.contentView?.addSubview(blLabel)
 
         // 'Bottom-left corner' Select button
-        blSelect.setButtonType(.momentaryPushIn)
-        blSelect.target = self
-        blSelect.isEnabled = blEnabled
-        blSelect.action = #selector(self.openDocument(_:))
+        genericSettings(type: blSelect, status: blEnabled, input: nil)
         blSelect.frame = CGRect(x: blLabel.frame.maxX+50, y: blLabel.frame.midY-blSelect.frame.height/2, width: blSelect.frame.width, height: blSelect.frame.height)
         blSelect.tag = 3
         self.window?.contentView?.addSubview(blSelect)
@@ -154,20 +130,12 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
         self.window?.contentView?.addSubview(brButton)
 
         // 'Bottom-right corner' application path label
-        brLabel.stringValue = self.cleanName(input: brLabel.stringValue)
-        brLabel.isEditable = false
-        brLabel.isSelectable = false
-        brLabel.isEnabled = brEnabled
-        brLabel.alignment = NSTextAlignment.center
-        brLabel.font = NSFont.userFont(ofSize: 12)
+        genericSettings(type: brLabel, status: brEnabled, input: brApp)
         brLabel.frame = CGRect(x: brButton.frame.maxX+50, y: brButton.frame.maxY-(brLabel.frame.height), width: largestPath, height: brLabel.frame.height)
         self.window?.contentView?.addSubview(brLabel)
 
         // 'Bottom-right corner' Select button
-        brSelect.setButtonType(.momentaryPushIn)
-        brSelect.target = self
-        brSelect.isEnabled = brEnabled
-        brSelect.action = #selector(self.openDocument(_:))
+        genericSettings(type: brSelect, status: brEnabled, input: nil)
         brSelect.frame = CGRect(x: brLabel.frame.maxX+50, y: brLabel.frame.midY-brSelect.frame.height/2, width: brSelect.frame.width, height: brSelect.frame.height)
         brSelect.tag = 4
         self.window?.contentView?.addSubview(brSelect)
@@ -236,6 +204,24 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
             }
         } else {
             msDelayText.stringValue = String(msDelayText.stringValue.dropLast(1))
+        }
+    }
+
+    func genericSettings(type: NSControl, status: Bool, input: String?) {
+        if type.isKind(of: NSTextField.self) {
+            let textField: NSTextField = type as! NSTextField
+            textField.stringValue = self.cleanName(input: input!)
+            textField.isEditable = false
+            textField.isSelectable = false
+            textField.isEnabled = status
+            textField.alignment = NSTextAlignment.center
+            textField.font = NSFont(name: ".AppleSystemUIFont", size: 13)
+        } else if type.isKind(of: NSButton.self) {
+            let button: NSButton = type as! NSButton
+            button.setButtonType(.momentaryPushIn)
+            button.target = self
+            button.isEnabled = status
+            button.action = #selector(self.openDocument(_:))
         }
     }
 
