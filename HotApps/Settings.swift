@@ -72,6 +72,7 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
         tlLabel.stringValue = self.cleanName(input: tlLabel.stringValue)
         tlLabel.isEditable = false
         tlLabel.isSelectable = true
+        tlLabel.isEnabled = tlEnabled
         tlLabel.alignment = NSTextAlignment.center
         tlLabel.font = NSFont.userFont(ofSize: 12)
         tlLabel.frame = CGRect(x: tlButton.frame.maxX+50, y: tlButton.frame.maxY-(tlLabel.frame.height), width: largestPath, height: tlLabel.frame.height)
@@ -80,6 +81,7 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
         // 'Top-left corner' Select button
         tlSelect.setButtonType(.momentaryPushIn)
         tlSelect.target = self
+        tlSelect.isEnabled = tlEnabled
         tlSelect.action = #selector(self.openDocument(_:))
         tlSelect.frame = CGRect(x: tlLabel.frame.maxX+50, y: tlLabel.frame.midY-tlSelect.frame.height/2, width: tlSelect.frame.width, height: tlSelect.frame.height)
         tlSelect.tag = 1
@@ -98,6 +100,7 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
         trLabel.stringValue = self.cleanName(input: trLabel.stringValue)
         trLabel.isEditable = false
         trLabel.isSelectable = false
+        trLabel.isEnabled = trEnabled
         trLabel.alignment = NSTextAlignment.center
         trLabel.font = NSFont.userFont(ofSize: 12)
         trLabel.frame = CGRect(x: trButton.frame.maxX+50, y: trButton.frame.maxY-(trLabel.frame.height), width: largestPath, height: trLabel.frame.height)
@@ -107,6 +110,7 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
         // 'Top-right corner' Select button
         trSelect.setButtonType(.momentaryPushIn)
         trSelect.target = self
+        trSelect.isEnabled = trEnabled
         trSelect.action = #selector(self.openDocument(_:))
         trSelect.frame = CGRect(x: trLabel.frame.maxX+50, y: trLabel.frame.midY-trSelect.frame.height/2, width: trSelect.frame.width, height: trSelect.frame.height)
         trSelect.tag = 2
@@ -125,6 +129,7 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
         blLabel.stringValue = self.cleanName(input: blLabel.stringValue)
         blLabel.isEditable = false
         blLabel.isSelectable = false
+        blLabel.isEnabled = blEnabled
         blLabel.alignment = NSTextAlignment.center
         blLabel.font = NSFont.userFont(ofSize: 12)
         blLabel.frame = CGRect(x: blButton.frame.maxX+50, y: blButton.frame.maxY-(blLabel.frame.height), width: largestPath, height: blLabel.frame.height)
@@ -133,6 +138,7 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
         // 'Bottom-left corner' Select button
         blSelect.setButtonType(.momentaryPushIn)
         blSelect.target = self
+        blSelect.isEnabled = blEnabled
         blSelect.action = #selector(self.openDocument(_:))
         blSelect.frame = CGRect(x: blLabel.frame.maxX+50, y: blLabel.frame.midY-blSelect.frame.height/2, width: blSelect.frame.width, height: blSelect.frame.height)
         blSelect.tag = 3
@@ -151,6 +157,7 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
         brLabel.stringValue = self.cleanName(input: brLabel.stringValue)
         brLabel.isEditable = false
         brLabel.isSelectable = false
+        brLabel.isEnabled = brEnabled
         brLabel.alignment = NSTextAlignment.center
         brLabel.font = NSFont.userFont(ofSize: 12)
         brLabel.frame = CGRect(x: brButton.frame.maxX+50, y: brButton.frame.maxY-(brLabel.frame.height), width: largestPath, height: brLabel.frame.height)
@@ -159,6 +166,7 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
         // 'Bottom-right corner' Select button
         brSelect.setButtonType(.momentaryPushIn)
         brSelect.target = self
+        brSelect.isEnabled = brEnabled
         brSelect.action = #selector(self.openDocument(_:))
         brSelect.frame = CGRect(x: brLabel.frame.maxX+50, y: brLabel.frame.midY-brSelect.frame.height/2, width: brSelect.frame.width, height: brSelect.frame.height)
         brSelect.tag = 4
@@ -269,15 +277,23 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
         switch button.tag {
         case 1:
             tlEnabled = tlButton.state == .on
+            tlLabel.isEnabled = tlEnabled
+            tlSelect.isEnabled = tlEnabled
             UserDefaults.standard.set(tlEnabled, forKey: "tlEnabled")
         case 2:
             trEnabled = trButton.state == .on
+            trLabel.isEnabled = trEnabled
+            trSelect.isEnabled = trEnabled
             UserDefaults.standard.set(trEnabled, forKey: "trEnabled")
         case 3:
             blEnabled = blButton.state == .on
+            blLabel.isEnabled = blEnabled
+            blSelect.isEnabled = blEnabled
             UserDefaults.standard.set(blEnabled, forKey: "blEnabled")
         case 4:
             brEnabled = brButton.state == .on
+            brLabel.isEnabled = brEnabled
+            brSelect.isEnabled = brEnabled
             UserDefaults.standard.set(brEnabled, forKey: "brEnabled")
         default:
             break
