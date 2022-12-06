@@ -147,21 +147,22 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
 
     func getLargestPath() -> CGFloat {
         var largestValue: CGFloat
-        largestValue = getStringSize(content: tlLabel.stringValue)
-        if (largestValue < getStringSize(content: trLabel.stringValue)) {
-            largestValue = getStringSize(content: trLabel.stringValue)
+        largestValue = getStringSize(content: cleanName(input: tlApp))
+        if (largestValue < getStringSize(content: cleanName(input: trApp))) {
+            largestValue = getStringSize(content: cleanName(input: trApp))
         }
-        if (largestValue < getStringSize(content: blLabel.stringValue)) {
-            largestValue = getStringSize(content: blLabel.stringValue)
+        if (largestValue < getStringSize(content: cleanName(input: blApp))) {
+            largestValue = getStringSize(content: cleanName(input: blApp))
         }
-        if (largestValue < getStringSize(content: brLabel.stringValue)) {
-            largestValue = getStringSize(content: brLabel.stringValue)
+        if (largestValue < getStringSize(content: cleanName(input: brApp))) {
+            largestValue = getStringSize(content: cleanName(input: brApp))
         }
         return largestValue+20
     }
 
     func getStringSize(content: String) -> CGFloat {
-        return content.size().width
+        let font = NSFont(name: ".AppleSystemUIFont", size: 13)
+        return content.size(withAttributes: [.font: font!, .paragraphStyle: NSMutableParagraphStyle()]).width.rounded()
     }
 
     func appSettings() {
