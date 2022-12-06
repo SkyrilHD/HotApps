@@ -3,8 +3,6 @@ name: HotApps Nightly builds
 on:
   push:
   pull_request:
-  release:
-    types: [published]
 
 jobs:
   build:
@@ -13,16 +11,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build
-      run: xcodebuild build
+      run: xcodebuild build -configuration Debug
     - name: Upload build artifact
       uses: actions/upload-artifact@v3.0.0
       with:
         path: build/*/*.zip
-    - name: Upload app to release
-      if: github.event_name == 'release'
-      uses: svenstaro/upload-release-action@2.2.1
-      with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: build/*/*.zip
-        tag: ${{ github.ref }}
-        file_glob: true
