@@ -7,10 +7,18 @@
 
 import AppKit
 
-let statusItem = NSStatusBar.system.statusItem(withLength:NSStatusItem.squareLength)
+var statusItem = NSStatusItem()
 
-class StatusBar: AppDelegate {
-    override init() {
+class StatusBar {
+
+    init() {
+        if !hideStatusBar {
+            add()
+        }
+    }
+
+    func add() {
+        statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
         // Set icon for status bar
         if #available(macOS 10.10, *) {
             statusItem.button?.image = NSImage(named: "StatusIcon")
@@ -60,5 +68,13 @@ class StatusBar: AppDelegate {
 
     func update() {
         statusItem.view?.updateLayer()
+    }
+
+    func hide(status: Bool) {
+        if status {
+            NSStatusBar.system.removeStatusItem(statusItem)
+        } else {
+            add()
+        }
     }
 }

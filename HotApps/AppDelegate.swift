@@ -18,6 +18,7 @@ var tlEnabled: Bool = false
 var trEnabled: Bool = false
 var msDelay: Int = 125
 var delayHide: Bool = true
+var hideStatusBar: Bool = false
 
 class AppDelegate: NSObject, NSApplicationDelegate {
     var settings: Settings
@@ -30,6 +31,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var appToOpen: String = ""
     var corner: Bool = false
     var appPath: URL?
+
+    func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+        openSettings()
+        return true
+    }
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
@@ -200,6 +206,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         let delayHideSetting = UserDefaults.standard.object(forKey: "delayHide") as? Bool
         delayHide = delayHideSetting != nil ? delayHideSetting! : true
+
+        let hideStatusBarSetting = UserDefaults.standard.object(forKey: "hideStatusBar") as? Bool
+        hideStatusBar = hideStatusBarSetting != nil ? hideStatusBarSetting! : false
     }
 
     @objc func aboutApp() {

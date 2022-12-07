@@ -29,6 +29,8 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
 
     var delayHideSetting = NSButton()
 
+    var hideSetting = NSButton()
+
     var largestPath: CGFloat = 0
 
     override init(window: NSWindow?) {
@@ -55,6 +57,8 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
         self.window!.setContentSize(NSSize(width: tlSelect.frame.maxX+20, height: self.window!.frame.height-brSelect.frame.minY+60))
 
         delaySettings()
+
+        hideSettings()
 
         appSettings()
         self.window?.center()
@@ -209,6 +213,17 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
         self.window?.contentView?.addSubview(delayHideSetting)
     }
 
+    func hideSettings() {
+        hideSetting.title = "Hide from status bar"
+        hideSetting.setButtonType(.switch)
+        hideSetting.font = NSFont(name: ".AppleSystemUIFont", size: 13)
+        hideSetting.sizeToFit()
+        hideSetting.frame = CGRect(x: ((self.window?.frame.width)!)-delayHideSetting.frame.width-20, y: (self.window?.frame.height ?? 220)-250, width: hideSetting.frame.width, height: hideSetting.frame.height)
+        hideSetting.state = hideStatusBar ? .on : .off
+        hideSetting.action = #selector(self.hideStatusBarSwitch(_:))
+        self.window?.contentView?.addSubview(hideSetting)
+    }
+
     func controlTextDidChange(_ obj: Notification) {
         if msDelayText.stringValue.count > 4 {
             msDelayText.stringValue = String(msDelay)
@@ -314,5 +329,11 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
     @objc func delayHideSwitch(_ button: NSButton) {
         delayHide = button.state == .on
         UserDefaults.standard.set(delayHide, forKey: "delayHide")
+    }
+
+    @objc func hideStatusBarSwitch(_ button: NSButton) {
+        hideStatusBar = button.state == .on
+        UserDefaults.standard.set(hideStatusBar, forKey: "hideStatusBar")
+        StatusBar().hide(status: hideStatusBar)
     }
 }
