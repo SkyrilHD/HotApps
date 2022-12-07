@@ -54,18 +54,13 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
 
         self.window?.delegate = self
 
-        appSettings()
-
-        self.window!.setContentSize(NSSize(width: tlSelect.frame.maxX+20, height: self.window!.frame.height-brSelect.frame.minY+100))
-
-        appSettings()
-        self.window?.center()
+        updateView()
     }
 
     func topLeftSettings() {
         // 'Top-left corner' toggle
         genericSettings(type: tlButton, status: tlEnabled, input: "Enable top-left corner", checkbox: true)
-        tlButton.frame = CGRect(x: 20, y: (self.window?.frame.height ?? 80)-80, width: brButton.frame.width, height: tlButton.frame.height)
+        tlButton.frame = CGRect(x: 20, y: self.window!.frame.height-80, width: brButton.frame.width, height: tlButton.frame.height)
         tlButton.tag = 1
 
         // 'Top-left corner' application path label
@@ -81,7 +76,7 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
     func topRightSettings() {
         // 'Top-right corner' toggle
         genericSettings(type: trButton, status: trEnabled, input: "Enable top-right corner", checkbox: true)
-        trButton.frame = CGRect(x: 20, y: (self.window?.frame.height ?? 110)-110, width: brButton.frame.width, height: trButton.frame.height)
+        trButton.frame = CGRect(x: 20, y: self.window!.frame.height-110, width: brButton.frame.width, height: trButton.frame.height)
         trButton.tag = 2
 
         // 'Top-right corner' application path label
@@ -97,7 +92,7 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
     func bottomLeftSettings() {
         // 'Bottom-left corner' toggle
         genericSettings(type: blButton, status: blEnabled, input: "Enable bottom-left corner", checkbox: true)
-        blButton.frame = CGRect(x: 20, y: (self.window?.frame.height ?? 140)-140, width: brButton.frame.width, height: blButton.frame.height)
+        blButton.frame = CGRect(x: 20, y: self.window!.frame.height-140, width: brButton.frame.width, height: blButton.frame.height)
         blButton.tag = 3
 
         // 'Botton-left corner' application path label
@@ -113,7 +108,7 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
     func bottomRightSettings() {
         // 'Bottom-right corner' toggle
         genericSettings(type: brButton, status: brEnabled, input: "Enable bottom-right corner", checkbox: true)
-        brButton.frame = CGRect(x: 20, y: (self.window?.frame.height ?? 170)-170, width: brButton.frame.width, height: brButton.frame.height)
+        brButton.frame = CGRect(x: 20, y: self.window!.frame.height-170, width: brButton.frame.width, height: brButton.frame.height)
         brButton.tag = 4
 
         // 'Bottom-right corner' application path label
@@ -162,54 +157,35 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
     }
 
     func delaySettings() {
-        msDelayLabel.stringValue = "Detection delay (in ms):"
-        msDelayLabel.font = NSFont(name: ".AppleSystemUIFont", size: 13)
-        msDelayLabel.sizeToFit()
-        msDelayLabel.frame = CGRect(x: 20, y: (self.window?.frame.height ?? 220)-220, width: msDelayLabel.frame.width, height: msDelayLabel.frame.height)
-        msDelayLabel.isEditable = false
-        msDelayLabel.isSelectable = false
+        genericSettings(type: msDelayLabel, status: true, input: "Detection delay (in ms):")
+        msDelayLabel.frame = CGRect(x: 20, y: self.window!.frame.height-220, width: msDelayLabel.frame.width, height: msDelayLabel.frame.height)
         msDelayLabel.isBordered = false
         msDelayLabel.isBezeled = false
         msDelayLabel.drawsBackground = false
-        self.window?.contentView?.addSubview(msDelayLabel)
+        msDelayLabel.alignment = .left
 
         msDelayText.sizeToFit()
-        msDelayText.frame = CGRect(x: 20, y: (self.window?.frame.height ?? 240)-240, width: 40, height: msDelayText.frame.height)
+        msDelayText.frame = CGRect(x: 20, y: self.window!.frame.height-240, width: 40, height: msDelayText.frame.height)
         msDelayText.stringValue = String(msDelay)
         msDelayText.isEditable = true
         msDelayText.delegate = self
         self.window?.contentView?.addSubview(msDelayText)
 
-        delayHideSetting.title = "Apply delay when hiding apps"
-        delayHideSetting.setButtonType(.switch)
-        delayHideSetting.font = NSFont(name: ".AppleSystemUIFont", size: 13)
-        delayHideSetting.sizeToFit()
-        delayHideSetting.frame = CGRect(x: 20, y: (self.window?.frame.height ?? 220)-270, width: delayHideSetting.frame.width, height: delayHideSetting.frame.height)
-        delayHideSetting.state = delayHide ? .on : .off
+        genericSettings(type: delayHideSetting, status: delayHide, input: "Apply delay when hiding apps", checkbox: true)
+        delayHideSetting.frame = CGRect(x: 20, y: self.window!.frame.height-270, width: delayHideSetting.frame.width, height: delayHideSetting.frame.height)
         delayHideSetting.action = #selector(self.delayHideSwitch(_:))
-        self.window?.contentView?.addSubview(delayHideSetting)
     }
 
     func hideSettings() {
-        hideSetting.title = "Hide from status bar"
-        hideSetting.setButtonType(.switch)
-        hideSetting.font = NSFont(name: ".AppleSystemUIFont", size: 13)
-        hideSetting.sizeToFit()
-        hideSetting.frame = CGRect(x: ((self.window?.frame.width)!)-hideSetting.frame.width-20, y: (self.window?.frame.height ?? 220)-220, width: hideSetting.frame.width, height: hideSetting.frame.height)
-        hideSetting.state = hideStatusBar ? .on : .off
+        genericSettings(type: hideSetting, status: hideStatusBar, input: "Hide from status bar", checkbox: true)
+        hideSetting.frame = CGRect(x: self.window!.frame.width-hideSetting.frame.width-20, y: self.window!.frame.height-220, width: hideSetting.frame.width, height: hideSetting.frame.height)
         hideSetting.action = #selector(self.hideStatusBarSwitch(_:))
-        self.window?.contentView?.addSubview(hideSetting)
     }
 
     func startupSettings() {
-        startupSetting.title = "Launch on Login"
-        startupSetting.setButtonType(.switch)
-        startupSetting.font = NSFont(name: ".AppleSystemUIFont", size: 13)
-        startupSetting.sizeToFit()
-        startupSetting.frame = CGRect(x: ((self.window?.frame.width)!)-hideSetting.frame.width-20, y: (self.window?.frame.height ?? 220)-250, width: startupSetting.frame.width, height: startupSetting.frame.height)
-        startupSetting.state = startup ? .on : .off
+        genericSettings(type: startupSetting, status: startup, input: "Launch on Login", checkbox: true)
+        startupSetting.frame = CGRect(x: self.window!.frame.width-hideSetting.frame.width-20, y: self.window!.frame.height-250, width: startupSetting.frame.width, height: startupSetting.frame.height)
         startupSetting.action = #selector(self.startupSwitch(_:))
-        self.window?.contentView?.addSubview(startupSetting)
     }
 
     func controlTextDidChange(_ obj: Notification) {
@@ -258,6 +234,13 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
         }
     }
 
+    func updateView() {
+        appSettings()
+        self.window!.setContentSize(NSSize(width: tlSelect.frame.maxX+20, height: self.window!.frame.height-brSelect.frame.minY+100))
+        self.window!.center()
+        appSettings()
+    }
+
     @objc func openDocument(_ button: NSButton) {
         let openPanel = NSOpenPanel()
         openPanel.allowedFileTypes = ["app"]
@@ -285,10 +268,7 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
             default:
                 break
             }
-            appSettings()
-            self.window!.setContentSize(NSSize(width: tlSelect.frame.maxX+20, height: self.window!.frame.height-brSelect.frame.minY+100))
-            self.window!.center()
-            appSettings()
+            updateView()
             StatusBar().update()
         }
     }
