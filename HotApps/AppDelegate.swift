@@ -222,7 +222,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let launcherBundleID = "com.skyrilhd.HotAppsLauncher"
         let isRunning = !NSWorkspace.shared.runningApplications.filter { $0.bundleIdentifier == launcherBundleID }.isEmpty
 
-        SMLoginItemSetEnabled(launcherBundleID as CFString, startup)
+        SMLoginItemSetEnabled(launcherBundleID as CFString, true)
 
         if isRunning {
             DistributedNotificationCenter.default().post(name: Notification.Name("killLauncher"), object: Bundle.main.bundleIdentifier!)
