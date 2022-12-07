@@ -28,11 +28,9 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
 
     var msDelayLabel = NSTextField()
     var msDelayText = NSTextField()
-
     var delayHideSetting = NSButton()
 
     var hideSetting = NSButton()
-
     var startupSetting = NSButton()
 
     var largestPath: CGFloat = 0
@@ -66,88 +64,64 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
 
     func topLeftSettings() {
         // 'Top-left corner' toggle
-        tlButton.title = "Enable top-left corner"
-        tlButton.setButtonType(.switch)
-        tlButton.font = NSFont(name: ".AppleSystemUIFont", size: 13)
-        tlButton.sizeToFit()
+        genericSettings(type: tlButton, status: tlEnabled, input: "Enable top-left corner", checkbox: true)
         tlButton.frame = CGRect(x: 20, y: (self.window?.frame.height ?? 80)-80, width: brButton.frame.width, height: tlButton.frame.height)
         tlButton.tag = 1
-        tlButton.state = tlEnabled ? .on : .off
-        tlButton.action = #selector(self.cornerSwitch(_:))
-        self.window?.contentView?.addSubview(tlButton)
 
         // 'Top-left corner' application path label
-        genericSettings(type: tlLabel, status: tlEnabled, input: tlApp)
+        genericSettings(type: tlLabel, status: tlEnabled, input: tlApp, checkbox: nil)
         tlLabel.frame = CGRect(x: tlButton.frame.maxX+50, y: tlButton.frame.maxY-(tlLabel.frame.height), width: largestPath, height: tlLabel.frame.height)
 
         // 'Top-left corner' Select button
-        genericSettings(type: tlSelect, status: tlEnabled, input: nil)
+        genericSettings(type: tlSelect, status: tlEnabled, input: nil, checkbox: false)
         tlSelect.frame = CGRect(x: tlLabel.frame.maxX+50, y: tlLabel.frame.midY-tlSelect.frame.height/2, width: tlSelect.frame.width, height: tlSelect.frame.height)
         tlSelect.tag = 1
     }
 
     func topRightSettings() {
         // 'Top-right corner' toggle
-        trButton.title = "Enable top-right corner"
-        trButton.setButtonType(.switch)
-        trButton.font = NSFont(name: ".AppleSystemUIFont", size: 13)
-        trButton.sizeToFit()
+        genericSettings(type: trButton, status: trEnabled, input: "Enable top-right corner", checkbox: true)
         trButton.frame = CGRect(x: 20, y: (self.window?.frame.height ?? 110)-110, width: brButton.frame.width, height: trButton.frame.height)
         trButton.tag = 2
-        trButton.state = trEnabled ? .on : .off
-        trButton.action = #selector(self.cornerSwitch(_:))
-        self.window?.contentView?.addSubview(trButton)
 
         // 'Top-right corner' application path label
-        genericSettings(type: trLabel, status: trEnabled, input: trApp)
+        genericSettings(type: trLabel, status: trEnabled, input: trApp, checkbox: nil)
         trLabel.frame = CGRect(x: trButton.frame.maxX+50, y: trButton.frame.maxY-(trLabel.frame.height), width: largestPath, height: trLabel.frame.height)
 
         // 'Top-right corner' Select button
-        genericSettings(type: trSelect, status: trEnabled, input: nil)
+        genericSettings(type: trSelect, status: trEnabled, input: nil, checkbox: false)
         trSelect.frame = CGRect(x: trLabel.frame.maxX+50, y: trLabel.frame.midY-trSelect.frame.height/2, width: trSelect.frame.width, height: trSelect.frame.height)
         trSelect.tag = 2
     }
 
     func bottomLeftSettings() {
         // 'Bottom-left corner' toggle
-        blButton.title = "Enable bottom-left corner"
-        blButton.setButtonType(.switch)
-        blButton.font = NSFont(name: ".AppleSystemUIFont", size: 13)
-        blButton.sizeToFit()
+        genericSettings(type: blButton, status: blEnabled, input: "Enable bottom-left corner", checkbox: true)
         blButton.frame = CGRect(x: 20, y: (self.window?.frame.height ?? 140)-140, width: brButton.frame.width, height: blButton.frame.height)
         blButton.tag = 3
-        blButton.state = blEnabled ? .on : .off
-        blButton.action = #selector(self.cornerSwitch(_:))
-        self.window?.contentView?.addSubview(blButton)
 
         // 'Botton-left corner' application path label
-        genericSettings(type: blLabel, status: blEnabled, input: blApp)
+        genericSettings(type: blLabel, status: blEnabled, input: blApp, checkbox: nil)
         blLabel.frame = CGRect(x: blButton.frame.maxX+50, y: blButton.frame.maxY-(blLabel.frame.height), width: largestPath, height: blLabel.frame.height)
 
         // 'Bottom-left corner' Select button
-        genericSettings(type: blSelect, status: blEnabled, input: nil)
+        genericSettings(type: blSelect, status: blEnabled, input: nil, checkbox: false)
         blSelect.frame = CGRect(x: blLabel.frame.maxX+50, y: blLabel.frame.midY-blSelect.frame.height/2, width: blSelect.frame.width, height: blSelect.frame.height)
         blSelect.tag = 3
     }
 
     func bottomRightSettings() {
         // 'Bottom-right corner' toggle
-        brButton.title = "Enable bottom-right corner"
-        brButton.setButtonType(.switch)
-        brButton.font = NSFont(name: ".AppleSystemUIFont", size: 13)
-        brButton.sizeToFit()
+        genericSettings(type: brButton, status: brEnabled, input: "Enable bottom-right corner", checkbox: true)
         brButton.frame = CGRect(x: 20, y: (self.window?.frame.height ?? 170)-170, width: brButton.frame.width, height: brButton.frame.height)
         brButton.tag = 4
-        brButton.state = brEnabled ? .on : .off
-        brButton.action = #selector(self.cornerSwitch(_:))
-        self.window?.contentView?.addSubview(brButton)
 
         // 'Bottom-right corner' application path label
-        genericSettings(type: brLabel, status: brEnabled, input: brApp)
+        genericSettings(type: brLabel, status: brEnabled, input: brApp, checkbox: nil)
         brLabel.frame = CGRect(x: brButton.frame.maxX+50, y: brButton.frame.maxY-(brLabel.frame.height), width: largestPath, height: brLabel.frame.height)
 
         // 'Bottom-right corner' Select button
-        genericSettings(type: brSelect, status: brEnabled, input: nil)
+        genericSettings(type: brSelect, status: brEnabled, input: nil, checkbox: false)
         brSelect.frame = CGRect(x: brLabel.frame.maxX+50, y: brLabel.frame.midY-brSelect.frame.height/2, width: brSelect.frame.width, height: brSelect.frame.height)
         brSelect.tag = 4
     }
@@ -252,7 +226,7 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
         }
     }
 
-    func genericSettings(type: NSControl, status: Bool, input: String?) {
+    func genericSettings(type: NSControl, status: Bool, input: String?, checkbox: Bool? = false) {
         if type.isKind(of: NSTextField.self) {
             let textField: NSTextField = type as! NSTextField
             textField.stringValue = self.cleanName(input: input!)
@@ -265,14 +239,21 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
             self.window?.contentView?.addSubview(textField)
         } else if type.isKind(of: NSButton.self) {
             let button: NSButton = type as! NSButton
-            button.title = "Select"
-            button.setButtonType(.momentaryPushIn)
-            button.target = self
-            button.isEnabled = status
-            button.bezelStyle = .rounded
+            if checkbox! {
+                button.title = input!
+                button.setButtonType(.switch)
+                button.state = status ? .on : .off
+                button.action = #selector(self.cornerSwitch(_:))
+            } else {
+                button.title = "Select"
+                button.setButtonType(.momentaryPushIn)
+                button.target = self
+                button.isEnabled = status
+                button.bezelStyle = .rounded
+                button.action = #selector(self.openDocument(_:))
+            }
             button.font = NSFont(name: ".AppleSystemUIFont", size: 13)
             button.sizeToFit()
-            button.action = #selector(self.openDocument(_:))
             self.window?.contentView?.addSubview(button)
         }
     }
