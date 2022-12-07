@@ -3,6 +3,7 @@
 //  HotApps
 //
 //  Created by SkyrilHD on 28.11.22.
+//  Copyright © 2022 SkyrilHD. All rights reserved.
 //
 
 import AppKit

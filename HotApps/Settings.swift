@@ -3,6 +3,7 @@
 //  HotApps
 //
 //  Created by SkyrilHD on 29.11.22.
+//  Copyright © 2022 SkyrilHD. All rights reserved.
 //
 
 import Cocoa

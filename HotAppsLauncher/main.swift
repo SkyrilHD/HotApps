@@ -3,6 +3,7 @@
 //  HotAppsLauncher
 //
 //  Created by SkyrilHD on 07.12.22.
+//  Copyright © 2022 SkyrilHD. All rights reserved.
 //
 
 import Cocoa
