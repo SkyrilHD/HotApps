@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		713B12E829401F2D004BEE2D /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713B12E729401F2D004BEE2D /* main.swift */; };
+		713B12F62940203A004BEE2D /* HotAppsLauncher.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 713B12E529401F2D004BEE2D /* HotAppsLauncher.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		713B12F929402063004BEE2D /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 713B12F829402063004BEE2D /* ServiceManagement.framework */; };
 		718D9E80293AB6270029CCA5 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718D9E7F293AB6270029CCA5 /* Settings.swift */; };
 		71E9A66129344F8A006C8926 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E9A66029344F8A006C8926 /* AppDelegate.swift */; };
 		71E9A66529344F8A006C8926 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 71E9A66429344F8A006C8926 /* Assets.xcassets */; };
@@ -15,7 +18,24 @@
 		71E9A67429351AA6006C8926 /* AboutApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E9A67329351AA6006C8926 /* AboutApp.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		713B12F429401FCC004BEE2D /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Contents/Library/LoginItems;
+			dstSubfolderSpec = 1;
+			files = (
+				713B12F62940203A004BEE2D /* HotAppsLauncher.app in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		713B12E529401F2D004BEE2D /* HotAppsLauncher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HotAppsLauncher.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		713B12E729401F2D004BEE2D /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		713B12F029401F2E004BEE2D /* HotAppsLauncher.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HotAppsLauncher.entitlements; sourceTree = "<group>"; };
+		713B12F829402063004BEE2D /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
 		718D9E7F293AB6270029CCA5 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		71E9A65D29344F8A006C8926 /* HotApps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HotApps.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		71E9A66029344F8A006C8926 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -27,21 +47,48 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		71E9A65A29344F8A006C8926 /* Frameworks */ = {
+		713B12E229401F2D004BEE2D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		71E9A65A29344F8A006C8926 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				713B12F929402063004BEE2D /* ServiceManagement.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		713B12E629401F2D004BEE2D /* HotAppsLauncher */ = {
+			isa = PBXGroup;
+			children = (
+				713B12E729401F2D004BEE2D /* main.swift */,
+				713B12F029401F2E004BEE2D /* HotAppsLauncher.entitlements */,
+			);
+			path = HotAppsLauncher;
+			sourceTree = "<group>";
+		};
+		713B12F729402063004BEE2D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				713B12F829402063004BEE2D /* ServiceManagement.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		71E9A65429344F8A006C8926 = {
 			isa = PBXGroup;
 			children = (
 				71E9A65F29344F8A006C8926 /* HotApps */,
+				713B12E629401F2D004BEE2D /* HotAppsLauncher */,
 				71E9A65E29344F8A006C8926 /* Products */,
+				713B12F729402063004BEE2D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -49,6 +96,7 @@
 			isa = PBXGroup;
 			children = (
 				71E9A65D29344F8A006C8926 /* HotApps.app */,
+				713B12E529401F2D004BEE2D /* HotAppsLauncher.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -70,6 +118,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		713B12E429401F2D004BEE2D /* HotAppsLauncher */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 713B12F329401F2E004BEE2D /* Build configuration list for PBXNativeTarget "HotAppsLauncher" */;
+			buildPhases = (
+				713B12E129401F2D004BEE2D /* Sources */,
+				713B12E229401F2D004BEE2D /* Frameworks */,
+				713B12E329401F2D004BEE2D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HotAppsLauncher;
+			productName = HotAppsLauncher;
+			productReference = 713B12E529401F2D004BEE2D /* HotAppsLauncher.app */;
+			productType = "com.apple.product-type.application";
+		};
 		71E9A65C29344F8A006C8926 /* HotApps */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 71E9A66C29344F8A006C8926 /* Build configuration list for PBXNativeTarget "HotApps" */;
@@ -78,6 +143,7 @@
 				71E9A65A29344F8A006C8926 /* Frameworks */,
 				71E9A65B29344F8A006C8926 /* Resources */,
 				718D9EA0293DAFED0029CCA5 /* Archive app */,
+				713B12F429401FCC004BEE2D /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -98,6 +164,9 @@
 				LastSwiftUpdateCheck = 1400;
 				LastUpgradeCheck = 1400;
 				TargetAttributes = {
+					713B12E429401F2D004BEE2D = {
+						CreatedOnToolsVersion = 14.0.1;
+					};
 					71E9A65C29344F8A006C8926 = {
 						CreatedOnToolsVersion = 14.0.1;
 					};
@@ -117,11 +186,19 @@
 			projectRoot = "";
 			targets = (
 				71E9A65C29344F8A006C8926 /* HotApps */,
+				713B12E429401F2D004BEE2D /* HotAppsLauncher */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		713B12E329401F2D004BEE2D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		71E9A65B29344F8A006C8926 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -155,6 +232,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		713B12E129401F2D004BEE2D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				713B12E829401F2D004BEE2D /* main.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		71E9A65929344F8A006C8926 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -170,6 +255,58 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		713B12F129401F2E004BEE2D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = HotAppsLauncher/HotAppsLauncher.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSBackgroundOnly = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.skyrilhd.HotAppsLauncher;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		713B12F229401F2E004BEE2D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = HotAppsLauncher/HotAppsLauncher.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSBackgroundOnly = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.skyrilhd.HotAppsLauncher;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		71E9A66A29344F8A006C8926 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -340,6 +477,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		713B12F329401F2E004BEE2D /* Build configuration list for PBXNativeTarget "HotAppsLauncher" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				713B12F129401F2E004BEE2D /* Debug */,
+				713B12F229401F2E004BEE2D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		71E9A65829344F8A006C8926 /* Build configuration list for PBXProject "HotApps" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

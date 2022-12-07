@@ -6,6 +6,7 @@
 //
 
 import Cocoa
+import ServiceManagement
 
 // currently set apps
 var blApp: String = ""
@@ -19,6 +20,7 @@ var trEnabled: Bool = false
 var msDelay: Int = 125
 var delayHide: Bool = true
 var hideStatusBar: Bool = false
+var startup: Bool = false
 
 class AppDelegate: NSObject, NSApplicationDelegate {
     var settings: Settings
@@ -39,6 +41,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
+        startupCheck()
+
         NSEvent.addGlobalMonitorForEvents(matching: .mouseMoved) {_ in
             #if DEBUG
                 //print(NSEvent.mouseLocation)
@@ -129,7 +133,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                         }
                     }
                     self.appPath = NSURL(fileURLWithPath: self.appToOpen, isDirectory: true) as URL
-                    workspace.open(self.appPath!)
                     if #available(macOS 10.15, *) {
                         workspace.openApplication(at: self.appPath!, configuration: NSWorkspace.OpenConfiguration())
                     } else {
@@ -209,6 +212,23 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         let hideStatusBarSetting = UserDefaults.standard.object(forKey: "hideStatusBar") as? Bool
         hideStatusBar = hideStatusBarSetting != nil ? hideStatusBarSetting! : false
+
+        let startupSetting = UserDefaults.standard.object(forKey: "startup") as? Bool
+        startup = startupSetting != nil ? startupSetting! : false
+    }
+
+    func startupCheck() {
+        let launcherBundleID = "com.skyrilhd.HotAppsLauncher"
+        let isRunning = !NSWorkspace.shared.runningApplications.filter { $0.bundleIdentifier == launcherBundleID }.isEmpty
+
+        SMLoginItemSetEnabled(launcherBundleID as CFString, startup)
+
+        if isRunning {
+            DistributedNotificationCenter.default().post(name: Notification.Name("killLauncher"), object: Bundle.main.bundleIdentifier!)
+            if !startup {
+                NSApp.terminate(self)
+            }
+        }
     }
 
     @objc func aboutApp() {

@@ -6,6 +6,7 @@
 //
 
 import Cocoa
+import ServiceManagement
 
 class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
     let tlButton = NSButton()
@@ -31,6 +32,8 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
 
     var hideSetting = NSButton()
 
+    var startupSetting = NSButton()
+
     var largestPath: CGFloat = 0
 
     override init(window: NSWindow?) {
@@ -54,11 +57,13 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
 
         appSettings()
 
-        self.window!.setContentSize(NSSize(width: tlSelect.frame.maxX+20, height: self.window!.frame.height-brSelect.frame.minY+60))
+        self.window!.setContentSize(NSSize(width: tlSelect.frame.maxX+20, height: self.window!.frame.height-brSelect.frame.minY+100))
 
         delaySettings()
 
         hideSettings()
+
+        startupSettings()
 
         appSettings()
         self.window?.center()
@@ -207,7 +212,7 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
         delayHideSetting.setButtonType(.switch)
         delayHideSetting.font = NSFont(name: ".AppleSystemUIFont", size: 13)
         delayHideSetting.sizeToFit()
-        delayHideSetting.frame = CGRect(x: ((self.window?.frame.width)!)-delayHideSetting.frame.width-20, y: (self.window?.frame.height ?? 220)-220, width: delayHideSetting.frame.width, height: delayHideSetting.frame.height)
+        delayHideSetting.frame = CGRect(x: 20, y: (self.window?.frame.height ?? 220)-270, width: delayHideSetting.frame.width, height: delayHideSetting.frame.height)
         delayHideSetting.state = delayHide ? .on : .off
         delayHideSetting.action = #selector(self.delayHideSwitch(_:))
         self.window?.contentView?.addSubview(delayHideSetting)
@@ -218,10 +223,21 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
         hideSetting.setButtonType(.switch)
         hideSetting.font = NSFont(name: ".AppleSystemUIFont", size: 13)
         hideSetting.sizeToFit()
-        hideSetting.frame = CGRect(x: ((self.window?.frame.width)!)-delayHideSetting.frame.width-20, y: (self.window?.frame.height ?? 220)-250, width: hideSetting.frame.width, height: hideSetting.frame.height)
+        hideSetting.frame = CGRect(x: ((self.window?.frame.width)!)-hideSetting.frame.width-20, y: (self.window?.frame.height ?? 220)-220, width: hideSetting.frame.width, height: hideSetting.frame.height)
         hideSetting.state = hideStatusBar ? .on : .off
         hideSetting.action = #selector(self.hideStatusBarSwitch(_:))
         self.window?.contentView?.addSubview(hideSetting)
+    }
+
+    func startupSettings() {
+        startupSetting.title = "Launch on Login"
+        startupSetting.setButtonType(.switch)
+        startupSetting.font = NSFont(name: ".AppleSystemUIFont", size: 13)
+        startupSetting.sizeToFit()
+        startupSetting.frame = CGRect(x: ((self.window?.frame.width)!)-hideSetting.frame.width-20, y: (self.window?.frame.height ?? 220)-250, width: startupSetting.frame.width, height: startupSetting.frame.height)
+        startupSetting.state = startup ? .on : .off
+        startupSetting.action = #selector(self.startupSwitch(_:))
+        self.window?.contentView?.addSubview(startupSetting)
     }
 
     func controlTextDidChange(_ obj: Notification) {
@@ -291,7 +307,7 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
                 break
             }
             appSettings()
-            self.window!.setContentSize(NSSize(width: tlSelect.frame.maxX+20, height: self.window!.frame.height-brSelect.frame.minY+60))
+            self.window!.setContentSize(NSSize(width: tlSelect.frame.maxX+20, height: self.window!.frame.height-brSelect.frame.minY+100))
             self.window!.center()
             delaySettings()
             StatusBar().update()
@@ -335,5 +351,11 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
         hideStatusBar = button.state == .on
         UserDefaults.standard.set(hideStatusBar, forKey: "hideStatusBar")
         StatusBar().hide(status: hideStatusBar)
+    }
+
+    @objc func startupSwitch(_ button: NSButton) {
+        startup = button.state == .on
+        UserDefaults.standard.set(startup, forKey: "startup")
+        AppDelegate().startupCheck()
     }
 }
