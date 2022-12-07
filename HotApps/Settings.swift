@@ -60,12 +60,6 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
 
         self.window!.setContentSize(NSSize(width: tlSelect.frame.maxX+20, height: self.window!.frame.height-brSelect.frame.minY+100))
 
-        delaySettings()
-
-        hideSettings()
-
-        startupSettings()
-
         appSettings()
         self.window?.center()
     }
@@ -184,6 +178,9 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
 
     func appSettings() {
         largestPath = getLargestPath()
+        delaySettings()
+        hideSettings()
+        startupSettings()
         bottomRightSettings()
         bottomLeftSettings()
         topRightSettings()
@@ -310,7 +307,7 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
             appSettings()
             self.window!.setContentSize(NSSize(width: tlSelect.frame.maxX+20, height: self.window!.frame.height-brSelect.frame.minY+100))
             self.window!.center()
-            delaySettings()
+            appSettings()
             StatusBar().update()
         }
     }
