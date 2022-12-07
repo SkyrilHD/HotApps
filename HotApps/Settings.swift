@@ -244,6 +244,7 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
     @objc func openDocument(_ button: NSButton) {
         let openPanel = NSOpenPanel()
         openPanel.allowedFileTypes = ["app"]
+        openPanel.directoryURL = URL(fileURLWithPath: "/Applications")
         openPanel.level = .modalPanel
         let panelResponse = openPanel.runModal()
         if panelResponse == NSApplication.ModalResponse.OK {
