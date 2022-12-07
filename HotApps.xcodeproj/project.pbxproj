@@ -18,6 +18,16 @@
 		71E9A67429351AA6006C8926 /* AboutApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E9A67329351AA6006C8926 /* AboutApp.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		71B75B2C294079C8003E34F7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 71E9A65529344F8A006C8926 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 713B12E429401F2D004BEE2D;
+			remoteInfo = HotAppsLauncher;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		713B12F429401FCC004BEE2D /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -148,6 +158,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				71B75B2D294079C8003E34F7 /* PBXTargetDependency */,
 			);
 			name = HotApps;
 			productName = HotApps;
@@ -253,6 +264,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		71B75B2D294079C8003E34F7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 713B12E429401F2D004BEE2D /* HotAppsLauncher */;
+			targetProxy = 71B75B2C294079C8003E34F7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		713B12F129401F2E004BEE2D /* Debug */ = {
