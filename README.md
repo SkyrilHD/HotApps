@@ -24,14 +24,16 @@ Put HotApps.app to the Applications folder and open it.
 
 ## Contributing
 
-Contributions are always welcome and greatly appreciated!
+Contributions are always welcome and greatly appreciated! Whether it's a bug report, new feature, correction, or additional documentation, we greatly value feedback and contributions from our community.
 
-If you have a suggestion that would make this project even better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+When contributing to this repository, we recommend first discussing the change you wish to make via issue with the owners before making a change.
+
+If possible, please check if the changes work and do not break other features.
 
 
 ## License
 
-[GNU General Public License v3.0](https://choosealicense.com/licenses/gpl-3.0/)
+Distributed under the [GNU General Public License v3.0](https://choosealicense.com/licenses/gpl-3.0/). See LICENSE for more information.
 
 
 ## Acknowledgements
