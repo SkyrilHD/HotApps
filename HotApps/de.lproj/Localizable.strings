@@ -1,0 +1,33 @@
+/* 
+  Localizable.strings
+  HotApps
+
+  Created by SkyrilHD on 12.12.22.
+  Copyright © 2022 SkyrilHD. All rights reserved.
+*/
+
+// Status bar
+"about_hotapps" = "Über HotApps";
+"current_hotapps" = "Aktuelle HotApps";
+"top-left_statusbar" = "Oben-links";
+"top-right_statusbar" = "Oben-rechts";
+"bottom-left_statusbar" = "Unten-links";
+"bottom-right_statusbar" = "Unten-rechts";
+"disabled" = "Deaktiviert";
+"settings" = "Einstellungen";
+"quit" = "HotApps beenden";
+
+// 'About HotApps' window
+"all_rights_reserved" = "Alle Rechte vorbehalten";
+
+// 'Settings' window
+"hotapps_settings" = "HotApps Einstellungen";
+"enable_tl_corner_setting" = "Obere linke Ecke aktivieren";
+"enable_tr_corner_setting" = "Obere rechte Ecke aktivieren";
+"enable_bl_corner_setting" = "Untere linke Ecke aktivieren";
+"enable_br_corner_setting" = "Untere rechte Ecke aktivieren";
+"detection_delay_label" = "Erkennungsverzögerung (in ms)";
+"delay_on_hide" = "Verzögerung beim Ausblenden von Apps anwenden";
+"hide_statusbar" = "Aus Statusleiste ausblenden";
+"launch_on_login" = "Beim Anmelden starten";
+"select" = "Auswählen";

@@ -21,7 +21,7 @@ class AboutApp: AppDelegate {
             backing: .buffered, defer: false)
         window!.center()
         window!.level = NSWindow.Level.modalPanel
-        window?.title = "About HotApps"
+        window?.title = NSLocalizedString("about_hotapps", comment: "")
 
         // Add logo to window
         if let appIconImage = NSImage(named: "AppIcon"), appIconImage.isValid {
@@ -33,7 +33,7 @@ class AboutApp: AppDelegate {
         // Add text to window
         let year = Calendar.current.component(.year, from: Date())
         let aboutText = NSTextField()
-        aboutText.stringValue = "Version: \(Bundle.main.infoDictionary!["CFBundleShortVersionString"]!)\n\nCopyright © \(year) SkyrilHD\nAll rights reserved"
+        aboutText.stringValue = "Version: \(Bundle.main.infoDictionary!["CFBundleShortVersionString"]!)\n\nCopyright © \(year) SkyrilHD\n"+NSLocalizedString("all_rights_reserved", comment: "")
         aboutText.isEditable = false
         aboutText.isSelectable = false
         aboutText.isBezeled = false

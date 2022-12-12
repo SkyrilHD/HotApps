@@ -1,0 +1,33 @@
+/* 
+  Localizable.strings
+  HotApps
+
+  Created by SkyrilHD on 12.12.22.
+  Copyright © 2022 SkyrilHD. All rights reserved.
+*/
+
+// Status bar
+"about_hotapps" = "About HotApps";
+"current_hotapps" = "Current HotApps";
+"top-left_statusbar" = "Top-left";
+"top-right_statusbar" = "Top-right";
+"bottom-left_statusbar" = "Bottom-left";
+"bottom-right_statusbar" = "Bottom-right";
+"disabled" = "Disabled";
+"settings" = "Settings";
+"quit" = "Quit HotApps";
+
+// 'About HotApps' window
+"all_rights_reserved" = "All rights reserved";
+
+// 'Settings' window
+"hotapps_settings" = "HotApps Settings";
+"enable_tl_corner_setting" = "Enable top-left corner";
+"enable_tr_corner_setting" = "Enable top-right corner";
+"enable_bl_corner_setting" = "Enable bottom-left corner";
+"enable_br_corner_setting" = "Enable bottom-right corner";
+"detection_delay_label" = "Detection delay (in ms)";
+"delay_on_hide" = "Apply delay when hiding apps";
+"hide_statusbar" = "Hide from status bar";
+"launch_on_login" = "Launch on Login";
+"select" = "Select";

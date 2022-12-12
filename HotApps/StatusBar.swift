@@ -34,34 +34,34 @@ class StatusBar {
         let nsmenu = NSMenu()
 
         // 'About HotApps'
-        nsmenu.addItem(withTitle: "About HotApps", action: #selector(AppDelegate().aboutApp), keyEquivalent: "")
+        nsmenu.addItem(withTitle: NSLocalizedString("about_hotapps", comment: ""), action: #selector(AppDelegate().aboutApp), keyEquivalent: "")
 
         nsmenu.addItem(NSMenuItem.separator())
 
         // Show which apps are being used
-        nsmenu.addItem(withTitle: "Current HotApps:", action: nil, keyEquivalent: "")
+        nsmenu.addItem(withTitle: NSLocalizedString("current_hotapps", comment: "")+":", action: nil, keyEquivalent: "")
 
-        let tlStatus = tlEnabled ? tlApp.components(separatedBy: "/").last! : "Disabled"
-        nsmenu.addItem(withTitle: "\tTop-left: "+tlStatus, action: nil, keyEquivalent: "")
+        let tlStatus = tlEnabled ? tlApp.components(separatedBy: "/").last! : NSLocalizedString("disabled", comment: "")
+        nsmenu.addItem(withTitle: "\t\(NSLocalizedString("top-left_statusbar", comment: "")): "+tlStatus, action: nil, keyEquivalent: "")
 
-        let trStatus = trEnabled ? trApp.components(separatedBy: "/").last! : "Disabled"
-        nsmenu.addItem(withTitle: "\tTop-right: "+trStatus, action: nil, keyEquivalent: "")
+        let trStatus = trEnabled ? trApp.components(separatedBy: "/").last! : NSLocalizedString("disabled", comment: "")
+        nsmenu.addItem(withTitle: "\t\(NSLocalizedString("top-right_statusbar", comment: "")): "+trStatus, action: nil, keyEquivalent: "")
 
-        let blStatus = blEnabled ? blApp.components(separatedBy: "/").last! : "Disabled"
-        nsmenu.addItem(withTitle: "\tBottom-left: "+blStatus, action: nil, keyEquivalent: "")
+        let blStatus = blEnabled ? blApp.components(separatedBy: "/").last! : NSLocalizedString("disabled", comment: "")
+        nsmenu.addItem(withTitle: "\t\(NSLocalizedString("bottom-left_statusbar", comment: "")): "+blStatus, action: nil, keyEquivalent: "")
         
-        let brStatus = brEnabled ? brApp.components(separatedBy: "/").last! : "Disabled"
-        nsmenu.addItem(withTitle: "\tBottom-right: "+brStatus, action: nil, keyEquivalent: "")
+        let brStatus = brEnabled ? brApp.components(separatedBy: "/").last! : NSLocalizedString("disabled", comment: "")
+        nsmenu.addItem(withTitle: "\t\(NSLocalizedString("bottom-right_statusbar", comment: "")): "+brStatus, action: nil, keyEquivalent: "")
 
         nsmenu.addItem(NSMenuItem.separator())
 
         // 'Settings'
-        nsmenu.addItem(withTitle: "Settings", action: #selector(AppDelegate().openSettings), keyEquivalent: "")
+        nsmenu.addItem(withTitle: NSLocalizedString("settings", comment: ""), action: #selector(AppDelegate().openSettings), keyEquivalent: "")
 
         nsmenu.addItem(NSMenuItem.separator())
 
         // 'Quit'
-        nsmenu.addItem(withTitle: "Quit", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "")
+        nsmenu.addItem(withTitle: NSLocalizedString("quit", comment: ""), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "")
 
         // Apply NSMenu to status bar
         statusItem.menu = nsmenu

@@ -50,7 +50,7 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
         self.window = NSWindow(contentRect: NSMakeRect(100, 100, NSScreen.main!.frame.width/2, NSScreen.main!.frame.height/2), styleMask: [.closable, .titled], backing: NSWindow.BackingStoreType.buffered, defer: false)
 
         self.window?.level = NSWindow.Level.floating
-        self.window?.title = "HotApps Settings"
+        self.window?.title = NSLocalizedString("hotapps_settings", comment: "")
 
         self.window?.delegate = self
 
@@ -59,7 +59,7 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
 
     func topLeftSettings() {
         // 'Top-left corner' toggle
-        genericSettings(type: tlButton, status: tlEnabled, input: "Enable top-left corner", checkbox: true)
+        genericSettings(type: tlButton, status: tlEnabled, input: NSLocalizedString("enable_tl_corner_setting", comment: ""), checkbox: true)
         tlButton.frame = CGRect(x: 20, y: self.window!.frame.height-80, width: brButton.frame.width, height: tlButton.frame.height)
         tlButton.tag = 1
 
@@ -75,7 +75,7 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
 
     func topRightSettings() {
         // 'Top-right corner' toggle
-        genericSettings(type: trButton, status: trEnabled, input: "Enable top-right corner", checkbox: true)
+        genericSettings(type: trButton, status: trEnabled, input: NSLocalizedString("enable_tr_corner_setting", comment: ""), checkbox: true)
         trButton.frame = CGRect(x: 20, y: self.window!.frame.height-110, width: brButton.frame.width, height: trButton.frame.height)
         trButton.tag = 2
 
@@ -91,7 +91,7 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
 
     func bottomLeftSettings() {
         // 'Bottom-left corner' toggle
-        genericSettings(type: blButton, status: blEnabled, input: "Enable bottom-left corner", checkbox: true)
+        genericSettings(type: blButton, status: blEnabled, input: NSLocalizedString("enable_bl_corner_setting", comment: ""), checkbox: true)
         blButton.frame = CGRect(x: 20, y: self.window!.frame.height-140, width: brButton.frame.width, height: blButton.frame.height)
         blButton.tag = 3
 
@@ -107,7 +107,7 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
 
     func bottomRightSettings() {
         // 'Bottom-right corner' toggle
-        genericSettings(type: brButton, status: brEnabled, input: "Enable bottom-right corner", checkbox: true)
+        genericSettings(type: brButton, status: brEnabled, input: NSLocalizedString("enable_br_corner_setting", comment: ""), checkbox: true)
         brButton.frame = CGRect(x: 20, y: self.window!.frame.height-170, width: brButton.frame.width, height: brButton.frame.height)
         brButton.tag = 4
 
@@ -157,7 +157,7 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
     }
 
     func delaySettings() {
-        genericSettings(type: msDelayLabel, status: true, input: "Detection delay (in ms):")
+        genericSettings(type: msDelayLabel, status: true, input: NSLocalizedString("detection_delay_label", comment: "")+":")
         msDelayLabel.frame = CGRect(x: 20, y: self.window!.frame.height-220, width: msDelayLabel.frame.width, height: msDelayLabel.frame.height)
         msDelayLabel.isBordered = false
         msDelayLabel.isBezeled = false
@@ -171,19 +171,19 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
         msDelayText.delegate = self
         self.window?.contentView?.addSubview(msDelayText)
 
-        genericSettings(type: delayHideSetting, status: delayHide, input: "Apply delay when hiding apps", checkbox: true)
+        genericSettings(type: delayHideSetting, status: delayHide, input: NSLocalizedString("delay_on_hide", comment: ""), checkbox: true)
         delayHideSetting.frame = CGRect(x: 20, y: self.window!.frame.height-270, width: delayHideSetting.frame.width, height: delayHideSetting.frame.height)
         delayHideSetting.action = #selector(self.delayHideSwitch(_:))
     }
 
     func hideSettings() {
-        genericSettings(type: hideSetting, status: hideStatusBar, input: "Hide from status bar", checkbox: true)
+        genericSettings(type: hideSetting, status: hideStatusBar, input: NSLocalizedString("hide_statusbar", comment: ""), checkbox: true)
         hideSetting.frame = CGRect(x: self.window!.frame.width-hideSetting.frame.width-20, y: self.window!.frame.height-220, width: hideSetting.frame.width, height: hideSetting.frame.height)
         hideSetting.action = #selector(self.hideStatusBarSwitch(_:))
     }
 
     func startupSettings() {
-        genericSettings(type: startupSetting, status: startup, input: "Launch on Login", checkbox: true)
+        genericSettings(type: startupSetting, status: startup, input: NSLocalizedString("launch_on_login", comment: ""), checkbox: true)
         startupSetting.frame = CGRect(x: self.window!.frame.width-hideSetting.frame.width-20, y: self.window!.frame.height-250, width: startupSetting.frame.width, height: startupSetting.frame.height)
         startupSetting.action = #selector(self.startupSwitch(_:))
     }
@@ -221,7 +221,7 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
                 button.state = status ? .on : .off
                 button.action = #selector(self.cornerSwitch(_:))
             } else {
-                button.title = "Select"
+                button.title = NSLocalizedString("select", comment: "")
                 button.setButtonType(.momentaryPushIn)
                 button.target = self
                 button.isEnabled = status
