@@ -44,112 +44,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Insert code here to initialize your application
         startupCheck()
 
+        NSEvent.addLocalMonitorForEvents(matching: .mouseMoved) {_ in
+            self.mainEvent()
+            return nil
+        }
         NSEvent.addGlobalMonitorForEvents(matching: .mouseMoved) {_ in
-            #if DEBUG
-                //print(NSEvent.mouseLocation)
-            #endif
-
-            var cornerType = ""
-            // This will check if the pointer is moved to any corner
-            // bottom-left corner
-            if self.cornerCheck(cornerType: "bl") && blEnabled {
-                self.appToOpen = blApp
-                cornerType = "bl"
-                self.corner = true
-            }
-            // bottom-right corner
-            else if self.cornerCheck(cornerType: "br") && brEnabled {
-                self.appToOpen = brApp
-                cornerType = "br"
-                self.corner = true
-            }
-            // top-left corner
-            else if self.cornerCheck(cornerType: "tl") && tlEnabled {
-                self.appToOpen = tlApp
-                cornerType = "br"
-                self.corner = true
-            }
-            // top-right corner
-            else if self.cornerCheck(cornerType: "tr") && trEnabled {
-                self.appToOpen = trApp
-                cornerType = "br"
-                self.corner = true
-            }
-
-            let workspace = NSWorkspace.shared
-            let frontApp = workspace.frontmostApplication!
-            let frontAppName = self.cleanBundleURLString(bundleURLString: frontApp.bundleURL!.absoluteString)
-
-            // Add 125ms delay (by default) to prevent apps from opening immediately
-            if !delayHide && (frontAppName == self.appToOpen) {
-            } else {
-                if self.corner == true && self.appToOpen != "" {
-                    usleep(UInt32(msDelay) * 1000)
-                }
-            }
-
-            // Check if pointer is still at corner
-            switch cornerType {
-            case "bl":
-                if !self.cornerCheck(cornerType: "bl") && self.appToOpen == blApp {
-                    self.appToOpen = ""
-                    self.corner = false
-                    return
-                }
-            case "br":
-                if !self.cornerCheck(cornerType: "br") && self.appToOpen == brApp {
-                    self.appToOpen = ""
-                    self.corner = false
-                    return
-                }
-            case "tl":
-                if !self.cornerCheck(cornerType: "tl") && self.appToOpen == tlApp {
-                    self.appToOpen = ""
-                    self.corner = false
-                    return
-                }
-            case "tr":
-                if !self.cornerCheck(cornerType: "tr") && self.appToOpen == trApp {
-                    self.appToOpen = ""
-                    self.corner = false
-                    return
-                }
-            default:
-                self.appToOpen = ""
-                self.corner = false
-                return
-            }
-
-            // Open application if pointer is at corner
-            if (self.corner && self.appToOpen != "") {
-                // Check if the corner app is the front application
-                // If yes, the app will hide. Otherwise the app will be opened.
-                if frontAppName != self.appToOpen {
-                    for runningApp in workspace.runningApplications {
-                        if runningApp.activationPolicy == .regular {
-                            if self.appToOpen == self.cleanBundleURLString(bundleURLString: runningApp.bundleURL!.absoluteString) {
-                                runningApp.unhide()
-                                break
-                            }
-                        }
-                    }
-                    self.appPath = NSURL(fileURLWithPath: self.appToOpen, isDirectory: true) as URL
-                    if #available(macOS 10.15, *) {
-                        workspace.openApplication(at: self.appPath!, configuration: NSWorkspace.OpenConfiguration())
-                    } else {
-                        // Fallback on earlier versions
-                        workspace.open(self.appPath!)
-                    }
-                    sleep(1)
-
-                } else {
-                    frontApp.hide()
-                    sleep(1)
-                }
-
-                self.corner = false
-                self.appToOpen = ""
-            }
+            self.mainEvent()
         }
 
         // Create status bar
@@ -162,6 +62,115 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {
         return true
+    }
+
+    func mainEvent() {
+#if DEBUG
+        //print(NSEvent.mouseLocation)
+#endif
+
+        var cornerType = ""
+        // This will check if the pointer is moved to any corner
+        // bottom-left corner
+        if self.cornerCheck(cornerType: "bl") && blEnabled {
+            self.appToOpen = blApp
+            cornerType = "bl"
+            self.corner = true
+        }
+        // bottom-right corner
+        else if self.cornerCheck(cornerType: "br") && brEnabled {
+            self.appToOpen = brApp
+            cornerType = "br"
+            self.corner = true
+        }
+        // top-left corner
+        else if self.cornerCheck(cornerType: "tl") && tlEnabled {
+            self.appToOpen = tlApp
+            cornerType = "br"
+            self.corner = true
+        }
+        // top-right corner
+        else if self.cornerCheck(cornerType: "tr") && trEnabled {
+            self.appToOpen = trApp
+            cornerType = "br"
+            self.corner = true
+        }
+
+        let workspace = NSWorkspace.shared
+        let frontApp = workspace.frontmostApplication!
+        let frontAppName = self.cleanBundleURLString(bundleURLString: frontApp.bundleURL!.absoluteString)
+
+        // Add 125ms delay (by default) to prevent apps from opening immediately
+        if !delayHide && (frontAppName == self.appToOpen) {
+        } else {
+            if self.corner == true && self.appToOpen != "" {
+                usleep(UInt32(msDelay) * 1000)
+            }
+        }
+
+        // Check if pointer is still at corner
+        switch cornerType {
+        case "bl":
+            if !self.cornerCheck(cornerType: "bl") && self.appToOpen == blApp {
+                self.appToOpen = ""
+                self.corner = false
+                return
+            }
+        case "br":
+            if !self.cornerCheck(cornerType: "br") && self.appToOpen == brApp {
+                self.appToOpen = ""
+                self.corner = false
+                return
+            }
+        case "tl":
+            if !self.cornerCheck(cornerType: "tl") && self.appToOpen == tlApp {
+                self.appToOpen = ""
+                self.corner = false
+                return
+            }
+        case "tr":
+            if !self.cornerCheck(cornerType: "tr") && self.appToOpen == trApp {
+                self.appToOpen = ""
+                self.corner = false
+                return
+            }
+        default:
+            self.appToOpen = ""
+            self.corner = false
+            return
+        }
+
+        // Open application if pointer is at corner
+        if (self.corner && self.appToOpen != "") {
+            // Check if the corner app is the front application
+            // If yes, the app will hide. Otherwise the app will be opened.
+            if frontAppName != self.appToOpen {
+                for runningApp in workspace.runningApplications {
+                    if runningApp.activationPolicy == .regular {
+                        if self.appToOpen == self.cleanBundleURLString(bundleURLString: runningApp.bundleURL!.absoluteString) {
+                            runningApp.unhide()
+                            break
+                        }
+                    }
+                }
+                self.appPath = NSURL(fileURLWithPath: self.appToOpen, isDirectory: true) as URL
+                if #available(macOS 10.15, *) {
+                    workspace.openApplication(at: self.appPath!, configuration: NSWorkspace.OpenConfiguration())
+                } else {
+                    // Fallback on earlier versions
+                    workspace.open(self.appPath!)
+                }
+                sleep(1)
+
+            } else {
+                frontApp.hide()
+                sleep(1)
+            }
+
+            self.corner = false
+            self.appToOpen = ""
+        }
+
     }
 
     func cleanBundleURLString(bundleURLString: String) -> String {
@@ -184,6 +193,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func firstStartupCheck() {
+        // get saved app paths
         let savedBlApp = UserDefaults.standard.object(forKey: "blApp") as? String?
         let savedBrApp = UserDefaults.standard.object(forKey: "brApp") as? String?
         let savedTlApp = UserDefaults.standard.object(forKey: "tlApp") as? String?
