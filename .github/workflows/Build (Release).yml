@@ -10,8 +10,9 @@ jobs:
     
     steps:
     - uses: actions/checkout@v2
-    - name: Build
+    - name: Build (Debug)
       run: xcodebuild build -configuration Debug
+    - name: Build (Release)
       run: xcodebuild build -configuration Release
     - name: Upload build artifact
       uses: actions/upload-artifact@v3.0.0
