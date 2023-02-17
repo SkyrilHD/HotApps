@@ -25,7 +25,10 @@ class AboutApp: AppDelegate {
 
         // Add logo to window
         if let appIconImage = NSImage(named: "AppIcon"), appIconImage.isValid {
-            let appIcon = NSImageView(frame: NSRect(x: ((window?.frame.width)!/2-(appIconImage.size.width)/2), y: ((window?.frame.height)!/2-(appIconImage.size.height)/2)+30, width: (appIconImage.size.width), height: (appIconImage.size.height)))
+            let appIcon = NSImageView(frame: NSRect(x: ((window?.frame.width)!/2-(appIconImage.size.width)/2),
+                                                    y: ((window?.frame.height)!/2-(appIconImage.size.height)/2)+30,
+                                                    width: (appIconImage.size.width),
+                                                    height: (appIconImage.size.height)))
             appIcon.image = appIconImage
             window!.contentView?.addSubview(appIcon)
         }
@@ -33,14 +36,19 @@ class AboutApp: AppDelegate {
         // Add text to window
         let year = Calendar.current.component(.year, from: Date())
         let aboutText = NSTextField()
-        aboutText.stringValue = "Version: \(Bundle.main.infoDictionary!["CFBundleShortVersionString"]!)\n\nCopyright © \(year) SkyrilHD\n"+NSLocalizedString("all_rights_reserved", comment: "")
+        aboutText.stringValue = "Version: \(Bundle.main.infoDictionary!["CFBundleShortVersionString"]!)\n\n"
+                                + "Copyright © \(year) SkyrilHD\n"
+                                + NSLocalizedString("all_rights_reserved", comment: "")
         aboutText.isEditable = false
         aboutText.isSelectable = false
         aboutText.isBezeled = false
         aboutText.drawsBackground = false
         aboutText.alignment = NSTextAlignment.center
         aboutText.font = NSFont.userFont(ofSize: 12)
-        aboutText.frame = NSRect(x: ((window?.frame.width)!/2-(aboutText.fittingSize.width)/2), y: ((window?.frame.height)!/3-(aboutText.fittingSize.height)), width: aboutText.fittingSize.width, height: aboutText.fittingSize.height)
+        aboutText.frame = NSRect(x: ((window?.frame.width)!/2-(aboutText.fittingSize.width)/2),
+                                 y: ((window?.frame.height)!/3-(aboutText.fittingSize.height)),
+                                 width: aboutText.fittingSize.width,
+                                 height: aboutText.fittingSize.height)
         window?.contentView?.addSubview(aboutText)
 
         // Show 'About HotApps' window

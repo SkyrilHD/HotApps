@@ -64,37 +64,78 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return true
     }
 
-    func mainEvent() {
-#if DEBUG
-        //print(NSEvent.mouseLocation)
-#endif
-
-        var cornerType = ""
+    func pointerCheck() -> String? {
         // This will check if the pointer is moved to any corner
         // bottom-left corner
         if self.cornerCheck(cornerType: "bl") && blEnabled {
             self.appToOpen = blApp
-            cornerType = "bl"
             self.corner = true
+            return "bl"
         }
         // bottom-right corner
         else if self.cornerCheck(cornerType: "br") && brEnabled {
             self.appToOpen = brApp
-            cornerType = "br"
             self.corner = true
+            return "br"
         }
         // top-left corner
         else if self.cornerCheck(cornerType: "tl") && tlEnabled {
             self.appToOpen = tlApp
-            cornerType = "br"
             self.corner = true
+            return "tl"
         }
         // top-right corner
         else if self.cornerCheck(cornerType: "tr") && trEnabled {
             self.appToOpen = trApp
-            cornerType = "br"
             self.corner = true
+            return "tr"
         }
+
+        return nil
+    }
+
+    func stillAtCorner(cornerType: String?) -> Bool {
+        // Check if pointer is still at corner
+        switch cornerType {
+        case "bl":
+            if !self.cornerCheck(cornerType: "bl") && self.appToOpen == blApp {
+                self.appToOpen = ""
+                self.corner = false
+                return false
+            }
+        case "br":
+            if !self.cornerCheck(cornerType: "br") && self.appToOpen == brApp {
+                self.appToOpen = ""
+                self.corner = false
+                return false
+            }
+        case "tl":
+            if !self.cornerCheck(cornerType: "tl") && self.appToOpen == tlApp {
+                self.appToOpen = ""
+                self.corner = false
+                return false
+            }
+        case "tr":
+            if !self.cornerCheck(cornerType: "tr") && self.appToOpen == trApp {
+                self.appToOpen = ""
+                self.corner = false
+                return false
+            }
+        default:
+            self.appToOpen = ""
+            self.corner = false
+            return false
+        }
+
+        return true
+    }
+
+    func mainEvent() {
+#if DEBUG
+        // print(NSEvent.mouseLocation)
+#endif
+
+        let cornerType = pointerCheck()
 
         let workspace = NSWorkspace.shared
         let frontApp = workspace.frontmostApplication!
@@ -108,49 +149,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
         }
 
-        // Check if pointer is still at corner
-        switch cornerType {
-        case "bl":
-            if !self.cornerCheck(cornerType: "bl") && self.appToOpen == blApp {
-                self.appToOpen = ""
-                self.corner = false
-                return
-            }
-        case "br":
-            if !self.cornerCheck(cornerType: "br") && self.appToOpen == brApp {
-                self.appToOpen = ""
-                self.corner = false
-                return
-            }
-        case "tl":
-            if !self.cornerCheck(cornerType: "tl") && self.appToOpen == tlApp {
-                self.appToOpen = ""
-                self.corner = false
-                return
-            }
-        case "tr":
-            if !self.cornerCheck(cornerType: "tr") && self.appToOpen == trApp {
-                self.appToOpen = ""
-                self.corner = false
-                return
-            }
-        default:
-            self.appToOpen = ""
-            self.corner = false
+        if !stillAtCorner(cornerType: cornerType) {
             return
         }
 
         // Open application if pointer is at corner
-        if (self.corner && self.appToOpen != "") {
+        if self.corner && self.appToOpen != "" {
             // Check if the corner app is the front application
             // If yes, the app will hide. Otherwise the app will be opened.
             if frontAppName != self.appToOpen {
-                for runningApp in workspace.runningApplications {
-                    if runningApp.activationPolicy == .regular {
-                        if self.appToOpen == self.cleanBundleURLString(bundleURLString: runningApp.bundleURL!.absoluteString) {
-                            runningApp.unhide()
-                            break
-                        }
+                for runningApp in workspace.runningApplications where runningApp.activationPolicy == .regular {
+                    if self.appToOpen == self.cleanBundleURLString(bundleURLString:
+                                                                    runningApp.bundleURL!.absoluteString) {
+                        runningApp.unhide()
+                        break
                     }
                 }
                 self.appPath = NSURL(fileURLWithPath: self.appToOpen, isDirectory: true) as URL
@@ -170,7 +182,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             self.corner = false
             self.appToOpen = ""
         }
-
     }
 
     func cleanBundleURLString(bundleURLString: String) -> String {
@@ -186,7 +197,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         case "tl":
             return NSEvent.mouseLocation.x == 0 && (NSEvent.mouseLocation.y).rounded() >= NSScreen.main!.frame.maxY
         case "tr":
-            return (NSEvent.mouseLocation.x).rounded() >= NSScreen.main!.frame.maxX && (NSEvent.mouseLocation.y).rounded() >= NSScreen.main!.frame.maxY
+            return (NSEvent.mouseLocation.x).rounded() >= NSScreen.main!.frame.maxX
+                    && (NSEvent.mouseLocation.y).rounded() >= NSScreen.main!.frame.maxY
         default:
             return false
         }
@@ -230,12 +242,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func startupCheck() {
         let launcherBundleID = "com.skyrilhd.HotAppsLauncher"
-        let isRunning = !NSWorkspace.shared.runningApplications.filter { $0.bundleIdentifier == launcherBundleID }.isEmpty
+        let isRunning = !NSWorkspace.shared.runningApplications.filter {
+            $0.bundleIdentifier == launcherBundleID }.isEmpty
 
-        SMLoginItemSetEnabled(launcherBundleID as CFString, true)
+        SMLoginItemSetEnabled(launcherBundleID as CFString, false)
 
         if isRunning {
-            DistributedNotificationCenter.default().post(name: Notification.Name("killLauncher"), object: Bundle.main.bundleIdentifier!)
+            DistributedNotificationCenter.default().post(name: Notification.Name("killLauncher"),
+                                                         object: Bundle.main.bundleIdentifier!)
             if !startup {
                 NSApp.terminate(self)
             }
@@ -252,4 +266,3 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         settings.showWindow(self)
     }
 }
-

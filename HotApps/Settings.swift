@@ -17,7 +17,7 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
     let trButton = NSButton()
     var trLabel = NSTextField()
     let trSelect = NSButton()
-    
+
     let blButton = NSButton()
     var blLabel = NSTextField()
     let blSelect = NSButton()
@@ -47,7 +47,10 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
 
     override func windowDidLoad() {
         super.windowDidLoad()
-        self.window = NSWindow(contentRect: NSMakeRect(100, 100, NSScreen.main!.frame.width/2, NSScreen.main!.frame.height/2), styleMask: [.closable, .titled], backing: NSWindow.BackingStoreType.buffered, defer: false)
+        self.window = NSWindow(contentRect: NSRect(x: 100, y: 100, width: NSScreen.main!.frame.width/2,
+                                                   height: NSScreen.main!.frame.height/2),
+                               styleMask: [.closable, .titled], backing: NSWindow.BackingStoreType.buffered,
+                               defer: false)
 
         self.window?.level = NSWindow.Level.floating
         self.window?.title = NSLocalizedString("hotapps_settings", comment: "")
@@ -59,65 +62,81 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
 
     func topLeftSettings() {
         // 'Top-left corner' toggle
-        genericSettings(type: tlButton, status: tlEnabled, input: NSLocalizedString("enable_tl_corner_setting", comment: ""), checkbox: true)
-        tlButton.frame = CGRect(x: 20, y: self.window!.frame.height-80, width: brButton.frame.width, height: tlButton.frame.height)
+        genericSettings(type: tlButton, status: tlEnabled,
+                        input: NSLocalizedString("enable_tl_corner_setting", comment: ""), checkbox: true)
+        tlButton.frame = CGRect(x: 20, y: self.window!.frame.height-80,
+                                width: brButton.frame.width, height: tlButton.frame.height)
         tlButton.tag = 1
 
         // 'Top-left corner' application path label
         genericSettings(type: tlLabel, status: tlEnabled, input: tlApp, checkbox: nil)
-        tlLabel.frame = CGRect(x: tlButton.frame.maxX+50, y: tlButton.frame.maxY-(tlLabel.frame.height), width: largestPath, height: tlLabel.frame.height)
+        tlLabel.frame = CGRect(x: tlButton.frame.maxX+50, y: tlButton.frame.maxY-(tlLabel.frame.height),
+                               width: largestPath, height: tlLabel.frame.height)
 
         // 'Top-left corner' Select button
         genericSettings(type: tlSelect, status: tlEnabled, input: nil, checkbox: false)
-        tlSelect.frame = CGRect(x: tlLabel.frame.maxX+50, y: tlLabel.frame.midY-tlSelect.frame.height/2, width: tlSelect.frame.width, height: tlSelect.frame.height)
+        tlSelect.frame = CGRect(x: tlLabel.frame.maxX+50, y: tlLabel.frame.midY-tlSelect.frame.height/2,
+                                width: tlSelect.frame.width, height: tlSelect.frame.height)
         tlSelect.tag = 1
     }
 
     func topRightSettings() {
         // 'Top-right corner' toggle
-        genericSettings(type: trButton, status: trEnabled, input: NSLocalizedString("enable_tr_corner_setting", comment: ""), checkbox: true)
-        trButton.frame = CGRect(x: 20, y: self.window!.frame.height-110, width: brButton.frame.width, height: trButton.frame.height)
+        genericSettings(type: trButton, status: trEnabled,
+                        input: NSLocalizedString("enable_tr_corner_setting", comment: ""), checkbox: true)
+        trButton.frame = CGRect(x: 20, y: self.window!.frame.height-110,
+                                width: brButton.frame.width, height: trButton.frame.height)
         trButton.tag = 2
 
         // 'Top-right corner' application path label
         genericSettings(type: trLabel, status: trEnabled, input: trApp, checkbox: nil)
-        trLabel.frame = CGRect(x: trButton.frame.maxX+50, y: trButton.frame.maxY-(trLabel.frame.height), width: largestPath, height: trLabel.frame.height)
+        trLabel.frame = CGRect(x: trButton.frame.maxX+50, y: trButton.frame.maxY-(trLabel.frame.height),
+                               width: largestPath, height: trLabel.frame.height)
 
         // 'Top-right corner' Select button
         genericSettings(type: trSelect, status: trEnabled, input: nil, checkbox: false)
-        trSelect.frame = CGRect(x: trLabel.frame.maxX+50, y: trLabel.frame.midY-trSelect.frame.height/2, width: trSelect.frame.width, height: trSelect.frame.height)
+        trSelect.frame = CGRect(x: trLabel.frame.maxX+50, y: trLabel.frame.midY-trSelect.frame.height/2,
+                                width: trSelect.frame.width, height: trSelect.frame.height)
         trSelect.tag = 2
     }
 
     func bottomLeftSettings() {
         // 'Bottom-left corner' toggle
-        genericSettings(type: blButton, status: blEnabled, input: NSLocalizedString("enable_bl_corner_setting", comment: ""), checkbox: true)
-        blButton.frame = CGRect(x: 20, y: self.window!.frame.height-140, width: brButton.frame.width, height: blButton.frame.height)
+        genericSettings(type: blButton, status: blEnabled,
+                        input: NSLocalizedString("enable_bl_corner_setting", comment: ""), checkbox: true)
+        blButton.frame = CGRect(x: 20, y: self.window!.frame.height-140,
+                                width: brButton.frame.width, height: blButton.frame.height)
         blButton.tag = 3
 
         // 'Botton-left corner' application path label
         genericSettings(type: blLabel, status: blEnabled, input: blApp, checkbox: nil)
-        blLabel.frame = CGRect(x: blButton.frame.maxX+50, y: blButton.frame.maxY-(blLabel.frame.height), width: largestPath, height: blLabel.frame.height)
+        blLabel.frame = CGRect(x: blButton.frame.maxX+50, y: blButton.frame.maxY-(blLabel.frame.height),
+                               width: largestPath, height: blLabel.frame.height)
 
         // 'Bottom-left corner' Select button
         genericSettings(type: blSelect, status: blEnabled, input: nil, checkbox: false)
-        blSelect.frame = CGRect(x: blLabel.frame.maxX+50, y: blLabel.frame.midY-blSelect.frame.height/2, width: blSelect.frame.width, height: blSelect.frame.height)
+        blSelect.frame = CGRect(x: blLabel.frame.maxX+50, y: blLabel.frame.midY-blSelect.frame.height/2,
+                                width: blSelect.frame.width, height: blSelect.frame.height)
         blSelect.tag = 3
     }
 
     func bottomRightSettings() {
         // 'Bottom-right corner' toggle
-        genericSettings(type: brButton, status: brEnabled, input: NSLocalizedString("enable_br_corner_setting", comment: ""), checkbox: true)
-        brButton.frame = CGRect(x: 20, y: self.window!.frame.height-170, width: brButton.frame.width, height: brButton.frame.height)
+        genericSettings(type: brButton, status: brEnabled,
+                        input: NSLocalizedString("enable_br_corner_setting", comment: ""), checkbox: true)
+        brButton.frame = CGRect(x: 20, y: self.window!.frame.height-170,
+                                width: brButton.frame.width, height: brButton.frame.height)
         brButton.tag = 4
 
         // 'Bottom-right corner' application path label
         genericSettings(type: brLabel, status: brEnabled, input: brApp, checkbox: nil)
-        brLabel.frame = CGRect(x: brButton.frame.maxX+50, y: brButton.frame.maxY-(brLabel.frame.height), width: largestPath, height: brLabel.frame.height)
+        brLabel.frame = CGRect(x: brButton.frame.maxX+50, y: brButton.frame.maxY-(brLabel.frame.height),
+                               width: largestPath, height: brLabel.frame.height)
 
         // 'Bottom-right corner' Select button
         genericSettings(type: brSelect, status: brEnabled, input: nil, checkbox: false)
-        brSelect.frame = CGRect(x: brLabel.frame.maxX+50, y: brLabel.frame.midY-brSelect.frame.height/2, width: brSelect.frame.width, height: brSelect.frame.height)
+        brSelect.frame = CGRect(x: brLabel.frame.maxX+50, y: brLabel.frame.midY-brSelect.frame.height/2,
+                                width: brSelect.frame.width, height: brSelect.frame.height)
         brSelect.tag = 4
     }
 
@@ -128,13 +147,13 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
     func getLargestPath() -> CGFloat {
         var largestValue: CGFloat
         largestValue = getStringSize(content: cleanName(input: tlApp))
-        if (largestValue < getStringSize(content: cleanName(input: trApp))) {
+        if largestValue < getStringSize(content: cleanName(input: trApp)) {
             largestValue = getStringSize(content: cleanName(input: trApp))
         }
-        if (largestValue < getStringSize(content: cleanName(input: blApp))) {
+        if largestValue < getStringSize(content: cleanName(input: blApp)) {
             largestValue = getStringSize(content: cleanName(input: blApp))
         }
-        if (largestValue < getStringSize(content: cleanName(input: brApp))) {
+        if largestValue < getStringSize(content: cleanName(input: brApp)) {
             largestValue = getStringSize(content: cleanName(input: brApp))
         }
         return largestValue+20
@@ -157,8 +176,10 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
     }
 
     func delaySettings() {
-        genericSettings(type: msDelayLabel, status: true, input: NSLocalizedString("detection_delay_label", comment: "")+":")
-        msDelayLabel.frame = CGRect(x: 20, y: self.window!.frame.height-220, width: msDelayLabel.frame.width, height: msDelayLabel.frame.height)
+        genericSettings(type: msDelayLabel, status: true,
+                        input: NSLocalizedString("detection_delay_label", comment: "")+":")
+        msDelayLabel.frame = CGRect(x: 20, y: self.window!.frame.height-220,
+                                    width: msDelayLabel.frame.width, height: msDelayLabel.frame.height)
         msDelayLabel.isBordered = false
         msDelayLabel.isBezeled = false
         msDelayLabel.drawsBackground = false
@@ -171,20 +192,28 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
         msDelayText.delegate = self
         self.window?.contentView?.addSubview(msDelayText)
 
-        genericSettings(type: delayHideSetting, status: delayHide, input: NSLocalizedString("delay_on_hide", comment: ""), checkbox: true)
-        delayHideSetting.frame = CGRect(x: 20, y: self.window!.frame.height-270, width: delayHideSetting.frame.width, height: delayHideSetting.frame.height)
+        genericSettings(type: delayHideSetting, status: delayHide,
+                        input: NSLocalizedString("delay_on_hide", comment: ""), checkbox: true)
+        delayHideSetting.frame = CGRect(x: 20, y: self.window!.frame.height-270,
+                                        width: delayHideSetting.frame.width, height: delayHideSetting.frame.height)
         delayHideSetting.action = #selector(self.delayHideSwitch(_:))
     }
 
     func hideSettings() {
-        genericSettings(type: hideSetting, status: hideStatusBar, input: NSLocalizedString("hide_statusbar", comment: ""), checkbox: true)
-        hideSetting.frame = CGRect(x: self.window!.frame.width-hideSetting.frame.width-20, y: self.window!.frame.height-220, width: hideSetting.frame.width, height: hideSetting.frame.height)
+        genericSettings(type: hideSetting, status: hideStatusBar,
+                        input: NSLocalizedString("hide_statusbar", comment: ""), checkbox: true)
+        hideSetting.frame = CGRect(x: self.window!.frame.width-hideSetting.frame.width-20,
+                                   y: self.window!.frame.height-220, width: hideSetting.frame.width,
+                                   height: hideSetting.frame.height)
         hideSetting.action = #selector(self.hideStatusBarSwitch(_:))
     }
 
     func startupSettings() {
-        genericSettings(type: startupSetting, status: startup, input: NSLocalizedString("launch_on_login", comment: ""), checkbox: true)
-        startupSetting.frame = CGRect(x: self.window!.frame.width-hideSetting.frame.width-20, y: self.window!.frame.height-250, width: startupSetting.frame.width, height: startupSetting.frame.height)
+        genericSettings(type: startupSetting, status: startup,
+                        input: NSLocalizedString("launch_on_login", comment: ""), checkbox: true)
+        startupSetting.frame = CGRect(x: self.window!.frame.width-hideSetting.frame.width-20,
+                                      y: self.window!.frame.height-250, width: startupSetting.frame.width,
+                                      height: startupSetting.frame.height)
         startupSetting.action = #selector(self.startupSwitch(_:))
     }
 
@@ -203,9 +232,8 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
     }
 
     func genericSettings(type: NSControl, status: Bool, input: String?, checkbox: Bool? = false) {
-        if type.isKind(of: NSTextField.self) {
-            let textField: NSTextField = type as! NSTextField
-            textField.stringValue = self.cleanName(input: input!)
+        if let textField = type as? NSTextField {
+            textField.stringValue = self.cleanName(input: input ?? "")
             textField.isEditable = false
             textField.isSelectable = false
             textField.isEnabled = status
@@ -213,10 +241,9 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
             textField.alignment = NSTextAlignment.center
             textField.font = NSFont(name: ".AppleSystemUIFont", size: 13)
             self.window?.contentView?.addSubview(textField)
-        } else if type.isKind(of: NSButton.self) {
-            let button: NSButton = type as! NSButton
-            if checkbox! {
-                button.title = input!
+        } else if let button = type as? NSButton {
+            if let isCheckbox = checkbox, isCheckbox {
+                button.title = input ?? ""
                 button.setButtonType(.switch)
                 button.state = status ? .on : .off
                 button.action = #selector(self.cornerSwitch(_:))
@@ -236,7 +263,8 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
 
     func updateView() {
         appSettings()
-        self.window!.setContentSize(NSSize(width: tlSelect.frame.maxX+20, height: self.window!.frame.height-brSelect.frame.minY+100))
+        self.window!.setContentSize(NSSize(width: tlSelect.frame.maxX+20,
+                                           height: self.window!.frame.height-brSelect.frame.minY+100))
         self.window!.center()
         appSettings()
     }
@@ -248,7 +276,8 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
         openPanel.level = .modalPanel
         let panelResponse = openPanel.runModal()
         if panelResponse == NSApplication.ModalResponse.OK {
-            let selPath = openPanel.url!.relativeString.dropFirst(7).dropLast(1).replacingOccurrences(of: "%20", with: " ")
+            let selPath = openPanel.url!.relativeString.dropFirst(7).dropLast(1).replacingOccurrences(of: "%20",
+                                                                                                      with: " ")
             switch button.tag {
             case 1:
                 tlApp = selPath

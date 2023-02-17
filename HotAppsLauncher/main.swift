@@ -17,7 +17,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let isRunning = !NSWorkspace.shared.runningApplications.filter { $0.bundleIdentifier == mainBundleID }.isEmpty
 
         if !isRunning {
-            DistributedNotificationCenter.default().addObserver(self, selector: #selector(self.terminate), name: Notification.Name("killLauncher"), object: mainBundleID)
+            DistributedNotificationCenter.default().addObserver(self, selector: #selector(self.terminate),
+                                                                name: Notification.Name("killLauncher"),
+                                                                object: mainBundleID)
 
             // Get HotApps path
             let launcherPath = Bundle.main.bundlePath as NSString
@@ -35,8 +37,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 // Fallback on earlier versions
                 NSWorkspace.shared.open(mainURL)
             }
-        }
-        else {
+        } else {
             self.terminate()
         }
     }
