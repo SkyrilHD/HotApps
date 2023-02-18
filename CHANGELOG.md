@@ -1,5 +1,11 @@
 HotApps Changelog
 ============================
+#### 0.5
+- improved corner detection
+- fixed a bug where a HotApp would hide/unhide even though the pointer was not at corner anymore
+- more performance improvements
+
+
 #### 0.4
 - performance improvements
 - bug fixes
@@ -19,6 +25,7 @@ HotApps Changelog
 - added support for saving populated apps
 - UI improvements
 - bug fixes
+
 
 #### 0.2 (Internal build)
 - changed app icon
