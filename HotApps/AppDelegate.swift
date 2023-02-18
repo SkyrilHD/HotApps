@@ -34,6 +34,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var appToOpen: String = ""
     var corner: Bool = false
     var appPath: URL?
+    var lastCorner: Bool = false
 
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
         openSettings()
@@ -130,31 +131,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return true
     }
 
-    func mainEvent() {
-#if DEBUG
-        // print(NSEvent.mouseLocation)
-#endif
-
-        let cornerType = pointerCheck()
-
-        let workspace = NSWorkspace.shared
-        let frontApp = workspace.frontmostApplication!
-        let frontAppName = self.cleanBundleURLString(bundleURLString: frontApp.bundleURL!.absoluteString)
-
-        // Add 125ms delay (by default) to prevent apps from opening immediately
-        if !delayHide && (frontAppName == self.appToOpen) {
-        } else {
-            if self.corner == true && self.appToOpen != "" {
-                usleep(UInt32(msDelay) * 1000)
-            }
-        }
-
-        if !stillAtCorner(cornerType: cornerType) {
-            return
-        }
-
+    func openApplication(workspace: NSWorkspace, frontApp: NSRunningApplication, frontAppName: String, cornerType: String?) {
         // Open application if pointer is at corner
         if self.corner && self.appToOpen != "" {
+            if lastCorner == corner {
+                return
+            }
             // Check if the corner app is the front application
             // If yes, the app will hide. Otherwise the app will be opened.
             if frontAppName != self.appToOpen {
@@ -172,15 +154,49 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     // Fallback on earlier versions
                     workspace.open(self.appPath!)
                 }
-                sleep(1)
-
             } else {
-                frontApp.hide()
-                sleep(1)
+                if delayHide {
+                    print(msDelay)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + Double(msDelay)/1000) {
+                        if self.stillAtCorner(cornerType: cornerType) {
+                            frontApp.hide()
+                        }
+                    }
+                } else {
+                    frontApp.hide()
+                }
             }
 
+            self.lastCorner = self.corner
             self.corner = false
             self.appToOpen = ""
+        }
+    }
+
+    func mainEvent() {
+        let cornerType = pointerCheck()
+
+        let workspace = NSWorkspace.shared
+        let frontApp = workspace.frontmostApplication!
+        let frontAppName = self.cleanBundleURLString(bundleURLString: frontApp.bundleURL!.absoluteString)
+
+        // Add 125ms delay (by default) to prevent apps from opening immediately
+        if (frontAppName != self.appToOpen) && self.corner == true && self.appToOpen != "" {
+            DispatchQueue.main.asyncAfter(deadline: .now() + Double(msDelay)/1000) {
+                if !self.stillAtCorner(cornerType: cornerType) {
+                    self.lastCorner = self.corner
+                    return
+                }
+                self.openApplication(workspace: workspace, frontApp: frontApp, frontAppName: frontAppName, cornerType: cornerType)
+            }
+            return
+        } else {
+            if !stillAtCorner(cornerType: cornerType) {
+                self.lastCorner = self.corner
+                return
+            }
+
+            openApplication(workspace: workspace, frontApp: frontApp, frontAppName: frontAppName, cornerType: cornerType)
         }
     }
 
