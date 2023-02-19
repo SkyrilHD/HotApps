@@ -12,8 +12,22 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build (Debug)
       run: xcodebuild build -configuration Debug
+    - name: Resign App
+      run: codesign --force --deep -s "-" "build/Debug/HotApps.app"
+    - name: Package App
+      run: |
+        cd build/Debug
+        APP_VER=$(plutil -extract CFBundleShortVersionString raw -o - HotApps.app/Contents/Info.plist)
+        zip -r HotApps-$APP_VER-DEBUG.zip HotApps.app
     - name: Build (Release)
       run: xcodebuild build -configuration Release
+    - name: Resign App
+      run: codesign --force --deep -s "-" "build/Debug/HotApps.app"
+    - name: Package App
+      run: |
+        cd build/Debug
+        APP_VER=$(plutil -extract CFBundleShortVersionString raw -o - HotApps.app/Contents/Info.plist)
+        zip -r HotApps-$APP_VER-RELEASE.zip HotApps.app
     - name: Upload build artifact
       uses: actions/upload-artifact@v3.0.0
       with:
