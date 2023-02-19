@@ -258,18 +258,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func startupCheck() {
         let launcherBundleID = "com.skyrilhd.HotAppsLauncher"
-        let isRunning = !NSWorkspace.shared.runningApplications.filter {
-            $0.bundleIdentifier == launcherBundleID }.isEmpty
-
-        SMLoginItemSetEnabled(launcherBundleID as CFString, false)
-
-        if isRunning {
-            DistributedNotificationCenter.default().post(name: Notification.Name("killLauncher"),
-                                                         object: Bundle.main.bundleIdentifier!)
-            if !startup {
-                NSApp.terminate(self)
-            }
-        }
+        SMLoginItemSetEnabled(launcherBundleID as CFString, startup)
     }
 
     @objc func aboutApp() {

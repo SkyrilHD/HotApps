@@ -29,5 +29,5 @@
 "detection_delay_label" = "Detection delay (in ms)";
 "delay_on_hide" = "Apply delay when hiding apps";
 "hide_statusbar" = "Hide from status bar";
-"launch_on_login" = "Launch on Login";
+"launch_on_login" = "Launch at Login";
 "select" = "Select";
