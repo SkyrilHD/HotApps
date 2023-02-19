@@ -9,7 +9,7 @@
 import Cocoa
 import ServiceManagement
 
-class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
+class Settings: NSWindowController, NSWindowDelegate {
     let tlButton = NSButton()
     var tlLabel = NSTextField()
     let tlSelect = NSButton()
@@ -175,30 +175,6 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
         topLeftSettings()
     }
 
-    func delaySettings() {
-        genericSettings(type: msDelayLabel, status: true,
-                        input: NSLocalizedString("detection_delay_label", comment: "")+":")
-        msDelayLabel.frame = CGRect(x: 20, y: self.window!.frame.height-220,
-                                    width: msDelayLabel.frame.width, height: msDelayLabel.frame.height)
-        msDelayLabel.isBordered = false
-        msDelayLabel.isBezeled = false
-        msDelayLabel.drawsBackground = false
-        msDelayLabel.alignment = .left
-
-        msDelayText.sizeToFit()
-        msDelayText.frame = CGRect(x: 20, y: self.window!.frame.height-240, width: 40, height: msDelayText.frame.height)
-        msDelayText.stringValue = String(msDelay)
-        msDelayText.isEditable = true
-        msDelayText.delegate = self
-        self.window?.contentView?.addSubview(msDelayText)
-
-        genericSettings(type: delayHideSetting, status: delayHide,
-                        input: NSLocalizedString("delay_on_hide", comment: ""), checkbox: true)
-        delayHideSetting.frame = CGRect(x: 20, y: self.window!.frame.height-270,
-                                        width: delayHideSetting.frame.width, height: delayHideSetting.frame.height)
-        delayHideSetting.action = #selector(self.delayHideSwitch(_:))
-    }
-
     func hideSettings() {
         genericSettings(type: hideSetting, status: hideStatusBar,
                         input: NSLocalizedString("hide_statusbar", comment: ""), checkbox: true)
@@ -215,20 +191,6 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
                                       y: self.window!.frame.height-250, width: startupSetting.frame.width,
                                       height: startupSetting.frame.height)
         startupSetting.action = #selector(self.startupSwitch(_:))
-    }
-
-    func controlTextDidChange(_ obj: Notification) {
-        if msDelayText.stringValue.count > 4 {
-            msDelayText.stringValue = String(msDelay)
-        }
-        if CharacterSet(charactersIn: msDelayText.stringValue).isSubset(of: .decimalDigits) {
-            if !msDelayText.stringValue.isEmpty {
-                msDelay = Int(msDelayText.stringValue)!
-                UserDefaults.standard.set(msDelay, forKey: "msDelay")
-            }
-        } else {
-            msDelayText.stringValue = String(msDelayText.stringValue.dropLast(1))
-        }
     }
 
     func genericSettings(type: NSControl, status: Bool, input: String?, checkbox: Bool? = false) {
@@ -346,5 +308,46 @@ class Settings: NSWindowController, NSWindowDelegate, NSTextFieldDelegate {
         startup = button.state == .on
         UserDefaults.standard.set(startup, forKey: "startup")
         AppDelegate().startupCheck()
+    }
+}
+
+// Delay settings
+extension Settings: NSTextFieldDelegate {
+    func delaySettings() {
+        genericSettings(type: msDelayLabel, status: true,
+                        input: NSLocalizedString("detection_delay_label", comment: "")+":")
+        msDelayLabel.frame = CGRect(x: 20, y: self.window!.frame.height-220,
+                                    width: msDelayLabel.frame.width, height: msDelayLabel.frame.height)
+        msDelayLabel.isBordered = false
+        msDelayLabel.isBezeled = false
+        msDelayLabel.drawsBackground = false
+        msDelayLabel.alignment = .left
+
+        msDelayText.sizeToFit()
+        msDelayText.frame = CGRect(x: 20, y: self.window!.frame.height-240, width: 40, height: msDelayText.frame.height)
+        msDelayText.stringValue = String(msDelay)
+        msDelayText.isEditable = true
+        msDelayText.delegate = self
+        self.window?.contentView?.addSubview(msDelayText)
+
+        genericSettings(type: delayHideSetting, status: delayHide,
+                        input: NSLocalizedString("delay_on_hide", comment: ""), checkbox: true)
+        delayHideSetting.frame = CGRect(x: 20, y: self.window!.frame.height-270,
+                                        width: delayHideSetting.frame.width, height: delayHideSetting.frame.height)
+        delayHideSetting.action = #selector(self.delayHideSwitch(_:))
+    }
+
+    func controlTextDidChange(_ obj: Notification) {
+        if msDelayText.stringValue.count > 4 {
+            msDelayText.stringValue = String(msDelay)
+        }
+        if CharacterSet(charactersIn: msDelayText.stringValue).isSubset(of: .decimalDigits) {
+            if !msDelayText.stringValue.isEmpty {
+                msDelay = Int(msDelayText.stringValue)!
+                UserDefaults.standard.set(msDelay, forKey: "msDelay")
+            }
+        } else {
+            msDelayText.stringValue = String(msDelayText.stringValue.dropLast(1))
+        }
     }
 }

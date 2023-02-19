@@ -131,7 +131,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return true
     }
 
-    func openApplication(workspace: NSWorkspace, frontApp: NSRunningApplication, frontAppName: String, cornerType: String?) {
+    func openApplication(workspace: NSWorkspace, frontApp: NSRunningApplication,
+                         frontAppName: String, cornerType: String?) {
         // Open application if pointer is at corner
         if self.corner && self.appToOpen != "" {
             if lastCorner == corner {
@@ -187,7 +188,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     self.lastCorner = self.corner
                     return
                 }
-                self.openApplication(workspace: workspace, frontApp: frontApp, frontAppName: frontAppName, cornerType: cornerType)
+                self.openApplication(workspace: workspace, frontApp: frontApp,
+                                     frontAppName: frontAppName, cornerType: cornerType)
             }
             return
         } else {
@@ -196,7 +198,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 return
             }
 
-            openApplication(workspace: workspace, frontApp: frontApp, frontAppName: frontAppName, cornerType: cornerType)
+            openApplication(workspace: workspace, frontApp: frontApp,
+                            frontAppName: frontAppName, cornerType: cornerType)
         }
     }
 
