@@ -156,8 +156,8 @@
 				71E9A65929344F8A006C8926 /* Sources */,
 				71E9A65A29344F8A006C8926 /* Frameworks */,
 				71E9A65B29344F8A006C8926 /* Resources */,
-				718D9EA0293DAFED0029CCA5 /* Archive app */,
 				713B12F429401FCC004BEE2D /* CopyFiles */,
+				718D9EA0293DAFED0029CCA5 /* Archive app */,
 			);
 			buildRules = (
 			);
