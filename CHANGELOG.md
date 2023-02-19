@@ -5,6 +5,7 @@ HotApps Changelog
 - fixed a bug where a HotApp would hide/unhide even though the pointer was not at corner anymore
 - more performance improvements
 - fixed 'Launch at Login'
+- added native Apple Silicon support
 
 
 #### 0.4
