@@ -157,7 +157,6 @@
 				71E9A65A29344F8A006C8926 /* Frameworks */,
 				71E9A65B29344F8A006C8926 /* Resources */,
 				713B12F429401FCC004BEE2D /* CopyFiles */,
-				718D9EA0293DAFED0029CCA5 /* Archive app */,
 			);
 			buildRules = (
 			);
@@ -226,28 +225,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		718D9EA0293DAFED0029CCA5 /* Archive app */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Archive app";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "cd \"${TARGET_BUILD_DIR}\"\ndist=(\"$FULL_PRODUCT_NAME\")\nif [ -d \"$DWARF_DSYM_FILE_NAME\" ]; then\n  rm -rf dSYM\n  mkdir dSYM\n  mv \"$DWARF_DSYM_FILE_NAME\" dSYM/\n  find ${FULL_PRODUCT_NAME} -name *.dSYM -exec mv {} dSYM/ \\;\n  dist+=(dSYM);\nfi\n\narchive=\"${PRODUCT_NAME}-${MARKETING_VERSION}-$(echo $CONFIGURATION | tr /a-z/ /A-Z/).zip\"\nrm -rf *.zip\nzip -qry -FS \"${archive}\" \"${dist[@]}\"\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		713B12E129401F2D004BEE2D /* Sources */ = {
