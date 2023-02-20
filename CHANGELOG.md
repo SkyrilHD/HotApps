@@ -1,5 +1,9 @@
 HotApps Changelog
 ============================
+#### 0.5.1
+- fixed HotApps crashing when entering screen saver
+
+
 #### 0.5
 - improved corner detection
 - fixed a bug where a HotApp would hide/unhide even though the pointer was not at corner anymore

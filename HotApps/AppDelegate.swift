@@ -178,6 +178,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let cornerType = pointerCheck()
 
         let workspace = NSWorkspace.shared
+
+        // If the user is not logged in, there is no frontmost app
+        // This happens if the user is in screen saver or login screen
+        if workspace.frontmostApplication == nil {
+            return
+        }
+
         let frontApp = workspace.frontmostApplication!
         let frontAppName = self.cleanBundleURLString(bundleURLString: frontApp.bundleURL!.absoluteString)
 
