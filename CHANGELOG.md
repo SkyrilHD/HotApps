@@ -1,5 +1,8 @@
 HotApps Changelog
 ============================
+#### 0.6
+
+
 #### 0.5.1
 - fixed HotApps crashing when entering screen saver
 
