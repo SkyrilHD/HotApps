@@ -1,6 +1,7 @@
 HotApps Changelog
 ============================
 #### 0.6
+- added support for multiple monitors
 
 
 #### 0.5.1

@@ -214,17 +214,44 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return bundleURLString.dropFirst(7).dropLast(1).replacingOccurrences(of: "%20", with: " ")
     }
 
+    func pointerAtScreen() -> NSScreen? {
+        // Check which screen the pointer is on
+        var pointerPos: NSScreen?
+        for screen in NSScreen.screens {
+            if NSEvent.mouseLocation.x > screen.frame.maxX {
+                continue
+            } else if NSEvent.mouseLocation.y > screen.frame.maxY {
+                continue
+            } else if NSEvent.mouseLocation.x < screen.frame.minX {
+                continue
+            } else if NSEvent.mouseLocation.y < screen.frame.minY {
+                continue
+            }
+            pointerPos = screen
+        }
+        return pointerPos
+    }
+
     func cornerCheck(cornerType: String) -> Bool {
+        let screen = pointerAtScreen()
+
+        if screen == nil {
+            // There is no display, so do nothing
+            return false
+        }
+
         switch cornerType {
         case "bl":
-            return NSEvent.mouseLocation.x == 0 && NSEvent.mouseLocation.y < 1
+            return NSEvent.mouseLocation.x < screen!.frame.minX+1 && NSEvent.mouseLocation.y < screen!.frame.minY+1
         case "br":
-            return (NSEvent.mouseLocation.x).rounded() >= NSScreen.main!.frame.maxX && NSEvent.mouseLocation.y < 1
+            return (NSEvent.mouseLocation.x).rounded() >= screen!.frame.maxX
+            && NSEvent.mouseLocation.y < screen!.frame.minY+1
         case "tl":
-            return NSEvent.mouseLocation.x == 0 && (NSEvent.mouseLocation.y).rounded() >= NSScreen.main!.frame.maxY
+            return NSEvent.mouseLocation.x < screen!.frame.minX+1
+            && (NSEvent.mouseLocation.y).rounded() >= screen!.frame.maxY
         case "tr":
-            return (NSEvent.mouseLocation.x).rounded() >= NSScreen.main!.frame.maxX
-                    && (NSEvent.mouseLocation.y).rounded() >= NSScreen.main!.frame.maxY
+            return (NSEvent.mouseLocation.x).rounded() >= screen!.frame.maxX
+                && (NSEvent.mouseLocation.y).rounded() >= screen!.frame.maxY
         default:
             return false
         }
