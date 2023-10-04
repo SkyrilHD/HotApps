@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7114357B2ACDE7E2000DF3AE /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 7114357A2ACDE7E2000DF3AE /* Localizable.xcstrings */; };
 		713B12E829401F2D004BEE2D /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713B12E729401F2D004BEE2D /* main.swift */; };
 		713B12F62940203A004BEE2D /* HotAppsLauncher.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 713B12E529401F2D004BEE2D /* HotAppsLauncher.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		713B12F929402063004BEE2D /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 713B12F829402063004BEE2D /* ServiceManagement.framework */; };
-		7183326A2946F8AF00BE86C8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7183326C2946F8AF00BE86C8 /* Localizable.strings */; };
 		718D9E80293AB6270029CCA5 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 718D9E7F293AB6270029CCA5 /* Settings.swift */; };
 		71E9A66129344F8A006C8926 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E9A66029344F8A006C8926 /* AppDelegate.swift */; };
 		71E9A66529344F8A006C8926 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 71E9A66429344F8A006C8926 /* Assets.xcassets */; };
@@ -43,12 +43,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		7114357A2ACDE7E2000DF3AE /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		713B12E529401F2D004BEE2D /* HotAppsLauncher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HotAppsLauncher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		713B12E729401F2D004BEE2D /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		713B12F029401F2E004BEE2D /* HotAppsLauncher.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HotAppsLauncher.entitlements; sourceTree = "<group>"; };
 		713B12F829402063004BEE2D /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
-		7183326B2946F8AF00BE86C8 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
-		7183326D2946F8DF00BE86C8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		718D9E7F293AB6270029CCA5 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		71E9A65D29344F8A006C8926 /* HotApps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HotApps.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		71E9A66029344F8A006C8926 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -124,7 +123,7 @@
 				71E9A66F29346CF4006C8926 /* main.swift */,
 				71E9A66429344F8A006C8926 /* Assets.xcassets */,
 				71E9A66929344F8A006C8926 /* HotApps.entitlements */,
-				7183326C2946F8AF00BE86C8 /* Localizable.strings */,
+				7114357A2ACDE7E2000DF3AE /* Localizable.xcstrings */,
 			);
 			path = HotApps;
 			sourceTree = "<group>";
@@ -220,7 +219,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				71E9A66529344F8A006C8926 /* Assets.xcassets in Resources */,
-				7183326A2946F8AF00BE86C8 /* Localizable.strings in Resources */,
+				7114357B2ACDE7E2000DF3AE /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -256,18 +255,6 @@
 			targetProxy = 71B75B2C294079C8003E34F7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		7183326C2946F8AF00BE86C8 /* Localizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				7183326B2946F8AF00BE86C8 /* de */,
-				7183326D2946F8DF00BE86C8 /* en */,
-			);
-			name = Localizable.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		713B12F129401F2E004BEE2D /* Debug */ = {
