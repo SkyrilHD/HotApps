@@ -9,7 +9,7 @@ jobs:
     runs-on: macos-latest
     
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v7
     - name: Build
       run: xcodebuild build -configuration Debug
     - name: Resign App
@@ -20,6 +20,7 @@ jobs:
         APP_VER=$(plutil -extract CFBundleShortVersionString raw -o - HotApps.app/Contents/Info.plist)
         zip -r HotApps-$APP_VER-DEBUG.zip HotApps.app
     - name: Upload build artifact
-      uses: actions/upload-artifact@v3.0.0
+      uses: actions/upload-artifact@v7
       with:
+        name: HotApps-Nightly-Build
         path: build/*/*.zip

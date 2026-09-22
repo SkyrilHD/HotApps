@@ -9,7 +9,7 @@ jobs:
     runs-on: macos-latest
     
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v7
     - name: Build (Debug)
       run: xcodebuild build -configuration Debug
     - name: Resign App
@@ -21,16 +21,17 @@ jobs:
         zip -r HotApps-$APP_VER-DEBUG.zip HotApps.app
     - name: Build (Release)
       run: xcodebuild build -configuration Release
-    - name: Resign App
+    - name: Resign App (Release)
       run: codesign --force --deep -s "-" "build/Debug/HotApps.app"
-    - name: Package App
+    - name: Package App (Release)
       run: |
         cd build/Debug
         APP_VER=$(plutil -extract CFBundleShortVersionString raw -o - HotApps.app/Contents/Info.plist)
         zip -r HotApps-$APP_VER-RELEASE.zip HotApps.app
     - name: Upload build artifact
-      uses: actions/upload-artifact@v3.0.0
+      uses: actions/upload-artifact@v7
       with:
+        name: HotApps-Release-Build
         path: build/*/*.zip
     - name: Upload app to release
       if: github.event_name == 'release'
