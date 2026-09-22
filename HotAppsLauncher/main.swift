@@ -19,13 +19,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
 
         if !isRunning {
-            var path = Bundle.main.bundlePath as NSString
+            var haURL = Bundle.main.bundleURL
             for _ in 1...4 {
-                path = path.deletingLastPathComponent as NSString
+                haURL = haURL.deletingLastPathComponent()
             }
 
-            let mainPathString = path as String
-            NSWorkspace.shared.launchApplication(mainPathString)
+            if #available(macOS 10.15, *) {
+                let config = NSWorkspace.OpenConfiguration()
+                NSWorkspace.shared.openApplication(at: haURL, configuration: config)
+            } else {
+                // Fallback on earlier versions
+                NSWorkspace.shared.open(haURL)
+            }
         }
 
         NSApp.terminate(nil)
