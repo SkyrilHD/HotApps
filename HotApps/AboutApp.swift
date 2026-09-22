@@ -8,29 +8,25 @@
 
 import Cocoa
 
-class AboutApp: AppDelegate {
-    var window: NSWindow?
-
-    override init() {
-        super.init()
-
+class AboutApp: NSWindowController, NSWindowDelegate {
+    init() {
         // Create empty window
-        window = NSWindow(
+        let aboutAppWindow = NSWindow(
             contentRect: NSRect(x: 0, y: 0, width: 220, height: 240),
             styleMask: [.closable, .titled],
             backing: .buffered, defer: false)
-        window!.center()
-        window!.level = NSWindow.Level.modalPanel
-        window?.title = NSLocalizedString("about_hotapps", comment: "")
+
+        aboutAppWindow.center()
+        aboutAppWindow.level = .modalPanel
+        aboutAppWindow.title = NSLocalizedString("about_hotapps", comment: "")
 
         // Add logo to window
         if let appIconImage = NSImage(named: "AppIcon"), appIconImage.isValid {
-            let appIcon = NSImageView(frame: NSRect(x: ((window?.frame.width)!/2-(appIconImage.size.width)/2),
-                                                    y: ((window?.frame.height)!/2-(appIconImage.size.height)/2)+30,
-                                                    width: (appIconImage.size.width),
-                                                    height: (appIconImage.size.height)))
+            let appIcon = NSImageView(frame: NSRect(x: ((aboutAppWindow.frame.width)/2-(appIconImage.size.width)/2),
+                                                    y: ((aboutAppWindow.frame.height)/2-(appIconImage.size.height)/2)+30,
+                                                    width: (appIconImage.size.width), height: (appIconImage.size.height)))
             appIcon.image = appIconImage
-            window!.contentView?.addSubview(appIcon)
+            aboutAppWindow.contentView?.addSubview(appIcon)
         }
 
         // Add text to window
@@ -45,13 +41,21 @@ class AboutApp: AppDelegate {
         aboutText.drawsBackground = false
         aboutText.alignment = NSTextAlignment.center
         aboutText.font = NSFont.userFont(ofSize: 12)
-        aboutText.frame = NSRect(x: ((window?.frame.width)!/2-(aboutText.fittingSize.width)/2),
-                                 y: ((window?.frame.height)!/3-(aboutText.fittingSize.height)),
+        aboutText.frame = NSRect(x: ((aboutAppWindow.frame.width)/2-(aboutText.fittingSize.width)/2),
+                                 y: ((aboutAppWindow.frame.height)/3-(aboutText.fittingSize.height)),
                                  width: aboutText.fittingSize.width,
                                  height: aboutText.fittingSize.height)
-        window?.contentView?.addSubview(aboutText)
+        aboutAppWindow.contentView?.addSubview(aboutText)
 
-        // Show 'About HotApps' window
-        NSWindowController(window: window).showWindow(self)
+        super.init(window: aboutAppWindow)
+        windowDidLoad()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    func windowWillClose(_ notification: Notification) {
+        (NSApp.delegate as? AppDelegate)?.aboutApp = nil
     }
 }
